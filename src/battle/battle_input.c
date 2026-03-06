@@ -3729,23 +3729,19 @@ static int BattleInput_CursorMove_MainMenu(BattleInput *battleInput, int shouldI
     default:
         input = sCursorArrayMainMenu[cursor->menuY][cursor->menuX];
 
-        if ((input == CURSOR_INPUT_RUN) && (gSystem.newKeys & PAD_KEY_UP)) {
+        key = BattleCursor_CheckKeyInput(cursor, 3, 2, sCursorArrayMainMenu[0]);
 
-        } else {
-            key = BattleCursor_CheckKeyInput(cursor, 3, 2, sCursorArrayMainMenu[0]);
-
-            if ((key == 0) && (input == CURSOR_INPUT_FIGHT)) {
-                if (gSystem.newKeys & PAD_KEY_LEFT) {
-                    cursor->menuX = 0;
-                    cursor->menuY = 1;
-                    PlaySE(SEQ_SE_DP_SELECT);
-                    key = PAD_KEY_LEFT;
-                } else if (gSystem.newKeys & PAD_KEY_RIGHT) {
-                    cursor->menuX = 2;
-                    cursor->menuY = 1;
-                    PlaySE(SEQ_SE_DP_SELECT);
-                    key = PAD_KEY_RIGHT;
-                }
+        if ((key == 0) && (input == CURSOR_INPUT_FIGHT)) {
+            if (gSystem.newKeys & PAD_KEY_LEFT) {
+                cursor->menuX = 0;
+                cursor->menuY = 1;
+                PlaySE(SEQ_SE_DP_SELECT);
+                key = PAD_KEY_LEFT;
+            } else if (gSystem.newKeys & PAD_KEY_RIGHT) {
+                cursor->menuX = 2;
+                cursor->menuY = 1;
+                PlaySE(SEQ_SE_DP_SELECT);
+                key = PAD_KEY_RIGHT;
             }
         }
         break;
@@ -3787,7 +3783,7 @@ static void BattleInput_CursorSave_MainMenu(BattleInput *battleInput, int input)
         for (y = 0; y < 2; y++) {
             for (x = 0; x < 3; x++) {
                 if (input == sCursorArrayMainMenu[y][x]) {
-                    cursor->commandX = x;
+                    cursor->commandX = (input == CURSOR_INPUT_FIGHT) ? 1 : x;
                     cursor->commandY = y;
 
                     return;
