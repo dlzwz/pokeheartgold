@@ -1470,9 +1470,14 @@ _021F2656:
 	lsr r1, r1, #0x18
 	bl ov01_02205790
 	ldr r0, [r4, #0xc]
+	bl FollowMon_IsActive
+	cmp r0, #0
+	beq _021F2686_skip_follow
+	ldr r0, [r4, #0xc]
 	bl FollowMon_GetMapObject
 	mov r1, #1
 	bl sub_02069DC8
+_021F2686_skip_follow:
 	ldr r0, [r4, #0xc]
 	mov r1, #1
 	bl ov01_0220609C

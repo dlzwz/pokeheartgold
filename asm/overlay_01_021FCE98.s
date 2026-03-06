@@ -311,6 +311,10 @@ ov01_021FD064: ; 0x021FD064
 	mov r2, #0
 	bl ov01_021FD190
 	add r0, r6, #0
+	bl FollowMon_IsActive
+	cmp r0, #0
+	beq _021FD064_skip_follow
+	add r0, r6, #0
 	bl FollowMon_GetMapObject
 	add r1, sp, #8
 	bl MapObject_CopyPositionVector
@@ -324,6 +328,7 @@ ov01_021FD064: ; 0x021FD064
 	add r0, r4, #0
 	mov r1, #1
 	bl Field3dObject_SetActiveFlag
+_021FD064_skip_follow:
 	add sp, #0x14
 	pop {r3, r4, r5, r6, pc}
 	.balign 4, 0

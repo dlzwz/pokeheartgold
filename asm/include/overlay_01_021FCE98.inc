@@ -11,6 +11,7 @@
 .public PlayerAvatar_GetGender
 .public MapObject_CopyPositionVector
 .public FollowMon_GetMapObject
+.public FollowMon_IsActive
 .public FollowMon_IsVisible
 .public FieldSystem_UnkSub108_AddMonMood
 .public memset
