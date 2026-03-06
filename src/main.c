@@ -88,7 +88,7 @@ void NitroMain(void) {
         }
     }
     gSystem.unk70 = 1;
-    gSystem.frameCounter = 0;
+    gSystem.frameCounter = 1;
     InitializeMainRNG();
     ScreenBrightnessData_InitAll();
     sub_02018380();
@@ -121,7 +121,7 @@ void NitroMain(void) {
         SysTaskQueue_RunTasks(gSystem.printTaskQueue);
         OS_WaitIrq(TRUE, OS_IE_VBLANK);
         gSystem.vblankCounter++;
-        gSystem.frameCounter = 0;
+        gSystem.frameCounter = 1;
         DoAllScreenBrightnessTransitionStep();
         HandleFadeUpdateFrame();
         if (gSystem.vBlankIntr != NULL) {
@@ -171,7 +171,7 @@ static void sub_02000F14(void) {
     sub_02036144();
     OS_WaitIrq(TRUE, OS_IE_VBLANK);
     gSystem.vblankCounter++;
-    gSystem.frameCounter = 0;
+    gSystem.frameCounter = 1;
     if (gSystem.vBlankIntr != NULL) {
         gSystem.vBlankIntr(gSystem.vBlankIntrArg);
     }
