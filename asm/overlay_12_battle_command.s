@@ -1701,7 +1701,7 @@ ov12_02247228: ; 0x02247228
 	mov r1, #6
 	lsl r1, r1, #8
 	tst r0, r1
-	beq _02247242
+	nop ; Force guaranteed capture on all balls
 	add sp, #0xc
 	mov r0, #4
 	pop {r4, r5, r6, r7, pc}
