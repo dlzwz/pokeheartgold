@@ -3687,12 +3687,18 @@ static int BattleInput_CheckCursorInput(BattleInput *battleInput) {
     if (cursor->enabled == FALSE) {
         if ((battleInput->keyPressed == TRUE) || (gSystem.newKeys & (PAD_BUTTON_A | PAD_BUTTON_B | PAD_BUTTON_X | PAD_BUTTON_Y | PAD_KEY_RIGHT | PAD_KEY_LEFT | PAD_KEY_UP | PAD_KEY_DOWN))) {
             if (battleInput->keyPressed == FALSE) {
-                PlaySE(SEQ_SE_DP_SELECT);
+                if (!(gSystem.newKeys & PAD_BUTTON_B)) {
+                    PlaySE(SEQ_SE_DP_SELECT);
+                }
             }
 
             cursor->enabled = TRUE;
             battleInput->keyPressed = FALSE;
             menu->funcCursor(battleInput, TRUE);
+
+            if (gSystem.newKeys & PAD_BUTTON_B) {
+                return menu->funcCursor(battleInput, FALSE);
+            }
         }
 
         return TOUCH_MENU_NO_INPUT;
@@ -3764,6 +3770,12 @@ static int BattleInput_CursorMove_MainMenu(BattleInput *battleInput, int shouldI
                     return i;
                 }
             }
+        } else {
+            cursor->menuX = 1;
+            cursor->menuY = 1;
+            input = sCursorArrayMainMenu[cursor->menuY][cursor->menuX];
+            ov12_0226BB1C(battleInput->cursor, menu->touchscreenRect[input].rect.left + 8, menu->touchscreenRect[input].rect.right - 8, menu->touchscreenRect[input].rect.top + 8, menu->touchscreenRect[input].rect.bottom - 8, FX32_CONST(272));
+            PlaySE(SEQ_SE_DP_SELECT);
         }
         break;
     }
