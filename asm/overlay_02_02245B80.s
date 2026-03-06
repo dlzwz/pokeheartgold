@@ -1922,30 +1922,30 @@ ov02_02246A84: ; 0x02246A84
 	push {r3, r4, r5, lr}
 	add r5, r0, #0
 	add r4, r1, #0
-	bl GF_RTC_GetTimeOfDay
+	; Randomly picks morning, day, or night encounters so all timed Pokemon are accessible anytime.
+	bl LCRandom
+	mov r1, #3
+	bl _s32_div_f
+	add r0, r1, #0
 	cmp r0, #0
-	bne _02246A98
-	add r3, r5, #0
-	add r3, #0x14
-	b _02246AB8
-_02246A98:
-	sub r1, r0, #1
-	cmp r1, #1
-	bhi _02246AA4
-	add r3, r5, #0
-	add r3, #0x2c
-	b _02246AB8
-_02246AA4:
-	sub r0, r0, #3
+	beq _rand_morn
 	cmp r0, #1
-	bhi _02246AB0
+	beq _rand_day
 	add r3, r5, #0
 	add r3, #0x44
 	b _02246AB8
-_02246AB0:
-	bl GF_AssertFail
+_rand_morn:
 	add r3, r5, #0
 	add r3, #0x14
+	b _02246AB8
+_rand_day:
+	add r3, r5, #0
+	add r3, #0x2c
+	nop
+	nop
+	nop
+	nop
+	nop
 _02246AB8:
 	mov r2, #0
 _02246ABA:
