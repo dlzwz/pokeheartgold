@@ -1192,9 +1192,7 @@ BOOL BtlCmd_CalcExpGain(BattleSystem *battleSystem, BattleContext *ctx) {
 
     if ((opponentData->unk195 & 1) && !(battleType & (BATTLE_TYPE_LINK | BATTLE_TYPE_SAFARI | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_PAL_PARK))) {
         int expMonsCnt = 0;
-        int expShareMonsCnt = 0;
         u16 totalExp;
-        u16 itemNo;
         Pokemon *mon;
         for (int i = 0; i < Party_GetCount(BattleSystem_GetParty(battleSystem, 0)); i++) {
             mon = BattleSystem_GetPartyMon(battleSystem, 0, i);
@@ -1202,29 +1200,21 @@ BOOL BtlCmd_CalcExpGain(BattleSystem *battleSystem, BattleContext *ctx) {
                 if (ctx->unk_A4[(ctx->battlerIdFainted >> 1) & 1] & MaskOfFlagNo(i)) {
                     expMonsCnt++;
                 }
-                itemNo = GetMonData(mon, MON_DATA_HELD_ITEM, 0);
-                if (GetItemVar(ctx, itemNo, ITEM_VAR_HOLD_EFFECT) == HOLD_EFFECT_EXP_SHARE) {
-                    expShareMonsCnt++;
-                }
             }
         }
         totalExp = GetMonBaseStat(ctx->battleMons[ctx->battlerIdFainted].species, BASE_EXP_YIELD);
         totalExp = (totalExp * ctx->battleMons[ctx->battlerIdFainted].level) / 7;
-        if (expShareMonsCnt) {
-            ctx->gainedExp = (totalExp / 2) / expMonsCnt;
-            if (ctx->gainedExp == 0) {
-                ctx->gainedExp = 1;
-            }
-            ctx->partyGainedExp = (totalExp / 2) / expShareMonsCnt;
-            if (ctx->partyGainedExp == 0) {
-                ctx->partyGainedExp = 1;
-            }
-        } else {
-            ctx->gainedExp = totalExp / expMonsCnt;
-            if (ctx->gainedExp == 0) {
-                ctx->gainedExp = 1;
-            }
-            ctx->partyGainedExp = 0;
+
+        // Full EXP for battle participants
+        ctx->gainedExp = totalExp / expMonsCnt;
+        if (ctx->gainedExp == 0) {
+            ctx->gainedExp = 1;
+        }
+
+        // Modern EXP Share: full EXP shared to the rest of the party
+        ctx->partyGainedExp = totalExp;
+        if (ctx->partyGainedExp == 0) {
+            ctx->partyGainedExp = 1;
         }
     } else {
         BattleScriptIncrementPointer(ctx, adrs);
@@ -1244,6 +1234,9 @@ BOOL BtlCmd_StartGetExpTask(BattleSystem *battleSystem, BattleContext *ctx) {
     ctx->getterWork->ctx = ctx;
     ctx->getterWork->state = 0;
     ctx->getterWork->unk30[6] = 0;
+    ctx->getterWork->unk30[7] = 0;
+    // Save original participant mask; unk_A4 bits are cleared as each mon is processed
+    ctx->getterWork->unk8 = ctx->unk_A4[(ctx->battlerIdFainted >> 1) & 1];
 
     SysTask_CreateOnMainQueue(Task_GetExp, ctx->getterWork, 0);
 
@@ -5939,18 +5932,35 @@ static void Task_GetExp(SysTask *task, void *inData) {
     side = (data->ctx->battlerIdFainted >> 1) & 1; // Get side of fainted mon (left or right)
     expBattler = 0;
 
-    // Figure out which mon we're working on
-    for (slot = data->unk30[6]; slot < BattleSystem_GetPartySize(data->battleSystem, expBattler); slot++) {
+    // Figure out which mon we're working on.
+    // unk30[7] == 0: participant pass (individual EXP messages).
+    // unk30[7] >= 1: non-participant pass (shared EXP message shown once at the end).
+    // unk8 holds the original participant bitmask (unk_A4 bits are cleared as mons are processed).
+    int partySize = BattleSystem_GetPartySize(data->battleSystem, expBattler);
+    for (slot = data->unk30[6]; slot < partySize; slot++) {
         mon = BattleSystem_GetPartyMon(data->battleSystem, expBattler, slot);
         item = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
         itemEffect = GetItemAttr(item, ITEM_VAR_HOLD_EFFECT, HEAP_ID_BATTLE);
 
-        if (itemEffect == HOLD_EFFECT_EXP_SHARE || (data->ctx->unk_A4[side] & MaskOfFlagNo(slot))) {
-            break;
+        BOOL alive = GetMonData(mon, MON_DATA_SPECIES, NULL)
+                  && GetMonData(mon, MON_DATA_HP, NULL)
+                  && !GetMonData(mon, MON_DATA_IS_EGG, NULL);
+        BOOL wasParticipant = (data->unk8 & MaskOfFlagNo(slot)) != 0;
+
+        if (data->unk30[7] == 0) {
+            if (alive && wasParticipant) break;   // pass 0: participants only
+        } else {
+            if (alive && !wasParticipant) break;  // pass 1: non-participants only
         }
     }
 
-    if (slot == BattleSystem_GetPartySize(data->battleSystem, expBattler)) {
+    if (slot == partySize) {
+        if (data->unk30[7] == 0) {
+            // Participant pass complete; begin non-participant pass
+            data->unk30[6] = 0;
+            data->unk30[7] = 1;
+            return;
+        }
         data->state = STATE_GET_EXP_DONE;
     } else if ((battleType & BATTLE_TYPE_DOUBLES)
         && !(battleType & BATTLE_TYPE_AI)
@@ -5981,10 +5991,8 @@ static void Task_GetExp(SysTask *task, void *inData) {
         if (GetMonData(mon, MON_DATA_HP, NULL) && GetMonData(mon, MON_DATA_LEVEL, NULL) != 100) {
             if (data->ctx->unk_A4[side] & MaskOfFlagNo(slot)) {
                 totalExp = data->ctx->gainedExp;
-            }
-
-            if (itemEffect == HOLD_EFFECT_EXP_SHARE) {
-                totalExp += data->ctx->partyGainedExp;
+            } else {
+                totalExp = data->ctx->partyGainedExp;
             }
 
             if (itemEffect == HOLD_EFFECT_EXP_UP) {
@@ -6022,12 +6030,26 @@ static void Task_GetExp(SysTask *task, void *inData) {
         }
 
         if (totalExp) {
-            msg.tag = TAG_NICKNAME_NUM;
-            msg.param[0] = expBattler | (slot << 8);
-            msg.param[1] = totalExp;
-            data->unk30[0] = BattleSystem_PrintBattleMessage(data->battleSystem, msgLoader, &msg, BattleSystem_GetTextFrameDelay(data->battleSystem));
-            data->unk30[1] = 7;
-            data->state++;
+            if (data->unk30[7] == 0) {
+                // Pass 0 - participant: show individual EXP message
+                msg.tag = TAG_NICKNAME_NUM;
+                msg.param[0] = expBattler | (slot << 8);
+                msg.param[1] = totalExp;
+                data->unk30[0] = BattleSystem_PrintBattleMessage(data->battleSystem, msgLoader, &msg, BattleSystem_GetTextFrameDelay(data->battleSystem));
+                data->unk30[1] = 7;
+                data->state++;
+            } else if (data->unk30[7] == 1) {
+                // Pass 1, first non-participant: show "rest of party gained EXP" once
+                data->unk30[7] = 2;
+                msg.id = msg_0197_01276;
+                msg.tag = TAG_NONE;
+                data->unk30[0] = BattleSystem_PrintBattleMessage(data->battleSystem, msgLoader, &msg, BattleSystem_GetTextFrameDelay(data->battleSystem));
+                data->unk30[1] = 7;
+                data->state++;
+            } else {
+                // Pass 1, subsequent non-participants: skip message, go to level-up check
+                data->state = STATE_GET_EXP_GAUGE;
+            }
         } else {
             data->state = STATE_GET_EXP_CHECK_DONE;
         }
