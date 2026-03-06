@@ -17430,12 +17430,18 @@ ov12_02261280: ; 0x02261280
 
 	thumb_func_start ov12_02261284
 ov12_02261284: ; 0x02261284
+	push {r4, lr}
+	add r4, r0, #0
 	ldr r3, _02261290 ; =MI_CpuFill8
 	add r0, #0x80
 	mov r1, #0
 	mov r2, #8
-	bx r3
-	nop
+	blx r3
+	add r0, r4, #0
+	add r0, #0x80
+	mov r1, #1
+	strb r1, [r0]
+	pop {r4, pc}
 _02261290: .word MI_CpuFill8
 	thumb_func_end ov12_02261284
 
