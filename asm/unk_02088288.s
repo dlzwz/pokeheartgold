@@ -1695,23 +1695,7 @@ _0208909E:
 	mov r0, #0x99
 	lsl r0, r0, #2
 	ldrh r0, [r1, r0]
-	bl MoveIsHM
-	cmp r0, #1
-	bne _020890D0
-	mov r0, #0x8b
-	lsl r0, r0, #2
-	ldr r0, [r5, r0]
-	ldrh r0, [r0, #0x18]
-	cmp r0, #0
-	beq _020890D0
-	ldr r0, _02089204 ; =0x0000044C
-	mov r1, #0
-	ldr r0, [r5, r0]
-	bl thunk_Sprite_SetDrawFlag
-	add r0, r5, #0
-	bl sub_0208DBF0
-	mov r0, #8
-	pop {r3, r4, r5, r6, r7, pc}
+	b _020890D0
 _020890D0:
 	add r0, r5, #0
 	bl sub_0208AED4
@@ -1795,37 +1779,7 @@ _02089170:
 	add r6, r5, r0
 	lsl r7, r4, #1
 	ldrh r0, [r6, r7]
-	bl MoveIsHM
-	cmp r0, #1
-	bne _020891C2
-	mov r0, #0x8b
-	lsl r0, r0, #2
-	ldr r0, [r5, r0]
-	ldrh r0, [r0, #0x18]
-	cmp r0, #0
-	beq _020891C2
-	ldr r0, _020891FC ; =0x000005DD
-	bl PlaySE
-	ldr r2, _02089200 ; =0x000007BD
-	mov r1, #0xf
-	ldrb r0, [r5, r2]
-	bic r0, r1
-	lsl r1, r4, #0x18
-	lsr r3, r1, #0x18
-	mov r1, #0xf
-	and r1, r3
-	orr r0, r1
-	strb r0, [r5, r2]
-	ldr r0, _02089204 ; =0x0000044C
-	mov r1, #0
-	ldr r0, [r5, r0]
-	bl thunk_Sprite_SetDrawFlag
-	add r0, r5, #0
-	bl sub_0208BBDC
-	add r0, r5, #0
-	bl sub_0208DBF0
-	mov r0, #8
-	pop {r3, r4, r5, r6, r7, pc}
+	b _020891C2
 _020891C2:
 	ldrh r0, [r6, r7]
 	cmp r0, #0
