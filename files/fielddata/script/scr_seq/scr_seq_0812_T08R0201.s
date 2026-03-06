@@ -141,26 +141,10 @@ _01A8:
 	goto _0190
 
 _01FB:
-	call _0062
-	buffer_players_name 0
-	gender_msgbox msg_0516_T08R0201_00010, msg_0516_T08R0201_00011
+	scrcmd_510
+	npc_msg msg_0516_T08R0201_00020
+	npc_msg msg_0516_T08R0201_00022
 	closemsg
-	apply_movement obj_T08R0201_workman, _0280
-	wait_movement
-	scrcmd_600
-	apply_movement obj_player, _0294
-	wait_movement
-	play_se SEQ_SE_DP_KAIDAN2
-	fade_screen 6, 1, 0, RGB_BLACK
-	wait_fade
-	warp MAP_PAL_PARK, 0, 24, 47, DIR_NORTH
-	fade_screen 6, 1, 1, RGB_BLACK
-	wait_fade
-	lock obj_partner_poke
-	scrcmd_606
-	apply_movement obj_partner_poke, _02A0
-	wait_movement
-	release obj_partner_poke
 	releaseall
 	end
 
