@@ -1647,6 +1647,43 @@ static u8 sub_0207B0B0(PartyMenu *partyMenu, u8 *buf) {
                     ++fieldMoveIndex;
                 }
             }
+
+            // Also offer HM field moves the mon can learn (HM in bag, not already known)
+            {
+                static const u16 sHMItems[NUM_HMS] = {
+                    ITEM_HM01, ITEM_HM02, ITEM_HM03, ITEM_HM04,
+                    ITEM_HM05, ITEM_HM06, ITEM_HM07, ITEM_HM08,
+                };
+                u8 h, m;
+                Bag *bag = partyMenu->args->bag;
+                for (h = 0; h < NUM_HMS && fieldMoveIndex < MAX_MON_MOVES; h++) {
+                    u16 hmMove = TMHMGetMove(sHMItems[h]);
+                    fieldEffect = MoveId_GetFieldEffectId(hmMove);
+                    if (fieldEffect == 0xFF) {
+                        continue;
+                    }
+                    BOOL alreadyKnows = FALSE;
+                    for (m = 0; m < MAX_MON_MOVES; m++) {
+                        if ((u16)GetMonData(pokemon, MON_DATA_MOVE1 + m, NULL) == hmMove) {
+                            alreadyKnows = TRUE;
+                            break;
+                        }
+                    }
+                    if (alreadyKnows) {
+                        continue;
+                    }
+                    if (!Bag_HasItem(bag, sHMItems[h], 1, HEAP_ID_PARTY_MENU)) {
+                        continue;
+                    }
+                    if (!GetMonTMHMCompat(pokemon, ItemToTMHMId(sHMItems[h]))) {
+                        continue;
+                    }
+                    buf[count] = fieldEffect;
+                    ++count;
+                    PartyMenu_ContextMenuAddFieldMove(partyMenu, hmMove, fieldMoveIndex);
+                    ++fieldMoveIndex;
+                }
+            }
         } else {
             buf[count] = PARTY_MON_CONTEXT_MENU_SWITCH;
             ++count;

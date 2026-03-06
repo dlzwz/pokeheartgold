@@ -366,6 +366,17 @@ ItemData *LoadAllItemData(enum HeapID heapID);
 ItemData *GetItemDataPtrFromArray(ItemData *itemData, u32 itemDataIdx);
 
 /*
+ * u16 MoveToHMItem(u16 moveId)
+ *
+ * Returns the item ID of the HM that teaches the given move.
+ *
+ * @param moveId:      Move ID to look up
+ *
+ * @returns: HM item ID if the move is taught by an HM, ITEM_NONE otherwise.
+ */
+u16 MoveToHMItem(u16 moveId);
+
+/*
  * BOOL ItemIdIsNotJohtoBall(u16 itemId)
  *
  * Check whether the item is a type of ball reintroduced in this game. Presumably for backwards compatibility with Diamond, Pearl, and Platinum.

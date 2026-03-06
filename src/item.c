@@ -953,6 +953,18 @@ BOOL MoveIsHM(u16 moveId) {
     return FALSE;
 }
 
+u16 MoveToHMItem(u16 moveId) {
+    u8 i;
+
+    for (i = 0; i < NUM_HMS; i++) {
+        if (sTMHMMoves[i + ITEM_HM01 - ITEM_TM01] == moveId) {
+            return ITEM_HM01 + i;
+        }
+    }
+
+    return ITEM_NONE;
+}
+
 u8 ItemToTMHMId(u16 itemId) {
     if (itemId < ITEM_TM01 || itemId > ITEM_HM08) {
         return 0;

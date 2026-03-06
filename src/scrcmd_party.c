@@ -1,5 +1,6 @@
 #include "constants/balls.h"
 
+#include "bag.h"
 #include "field_system.h"
 #include "get_egg.h"
 #include "item.h"
@@ -123,6 +124,19 @@ BOOL ScrCmd_MonHasMove(ScriptContext *ctx) {
         *hasMove = TRUE;
     }
 
+    if (*hasMove == FALSE) {
+        u16 hmItem = MoveToHMItem(move);
+        if (hmItem != ITEM_NONE) {
+            Bag *bag = Save_Bag_Get(fieldSystem->saveData);
+            if (Bag_HasItem(bag, hmItem, 1, HEAP_ID_FIELD2)) {
+                u8 tmhmId = ItemToTMHMId(hmItem);
+                if (GetMonTMHMCompat(mon, tmhmId)) {
+                    *hasMove = TRUE;
+                }
+            }
+        }
+    }
+
     return FALSE;
 }
 
@@ -133,6 +147,16 @@ BOOL ScrCmd_GetPartySlotWithMove(ScriptContext *ctx) {
     u8 i;
 
     u8 partyCount = Party_GetCount(SaveArray_Party_Get(fieldSystem->saveData));
+
+    u16 hmItem = MoveToHMItem(move);
+    BOOL hasHMInBag = FALSE;
+    u8 tmhmId = 0xFF;
+    if (hmItem != ITEM_NONE) {
+        Bag *bag = Save_Bag_Get(fieldSystem->saveData);
+        hasHMInBag = Bag_HasItem(bag, hmItem, 1, HEAP_ID_FIELD2);
+        tmhmId = ItemToTMHMId(hmItem);
+    }
+
     for (i = 0, *slot = PARTY_SIZE; i < partyCount; i++) {
         Pokemon *mon = Party_GetMonByIndex(SaveArray_Party_Get(fieldSystem->saveData), i);
         if (GetMonData(mon, MON_DATA_IS_EGG, NULL)) {
@@ -140,6 +164,11 @@ BOOL ScrCmd_GetPartySlotWithMove(ScriptContext *ctx) {
         }
 
         if (GetMonData(mon, MON_DATA_MOVE1, NULL) == move || GetMonData(mon, MON_DATA_MOVE2, NULL) == move || GetMonData(mon, MON_DATA_MOVE3, NULL) == move || GetMonData(mon, MON_DATA_MOVE4, NULL) == move) {
+            *slot = i;
+            break;
+        }
+
+        if (hasHMInBag && GetMonTMHMCompat(mon, tmhmId)) {
             *slot = i;
             break;
         }

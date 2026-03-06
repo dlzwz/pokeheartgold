@@ -5,9 +5,13 @@
 #include "constants/battle.h"
 #include "constants/items.h"
 
+#include "bag.h"
 #include "get_egg.h"
+#include "item.h"
 #include "party.h"
+#include "pokemon.h"
 #include "pokemon_mood.h"
+#include "save.h"
 #include "unk_0206979C.h"
 #include "update_dex_received.h"
 
@@ -72,6 +76,18 @@ int GetIdxOfFirstPartyMonWithMove(Party *party, u16 move) {
     int i;
     int n;
     Pokemon *mon;
+    u16 hmItem;
+    BOOL hasHMInBag;
+    u8 tmhmId;
+
+    hmItem = MoveToHMItem(move);
+    hasHMInBag = FALSE;
+    tmhmId = 0xFF;
+    if (hmItem != ITEM_NONE) {
+        Bag *bag = Save_Bag_Get(SaveData_Get());
+        hasHMInBag = Bag_HasItem(bag, hmItem, 1, HEAP_ID_FIELD2);
+        tmhmId = ItemToTMHMId(hmItem);
+    }
 
     n = Party_GetCount(party);
     for (i = 0; i < n; i++) {
@@ -83,6 +99,9 @@ int GetIdxOfFirstPartyMonWithMove(Party *party, u16 move) {
             || GetMonData(mon, MON_DATA_MOVE2, NULL) == move
             || GetMonData(mon, MON_DATA_MOVE3, NULL) == move
             || GetMonData(mon, MON_DATA_MOVE4, NULL) == move) {
+            return i;
+        }
+        if (hasHMInBag && GetMonTMHMCompat(mon, tmhmId)) {
             return i;
         }
     }
