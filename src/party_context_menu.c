@@ -1193,15 +1193,15 @@ u32 PartyMenu_HandleInput_ContextMenu(PartyMenu *partyMenu, PartyMenuContextMenu
             return LIST_NOTHING_CHOSEN;
         }
     } else {
-        if (gSystem.newAndRepeatedKeys & PAD_KEY_UP) {
+        if (gSystem.newKeys & PAD_KEY_UP) {
             if (handlePartyMenuTopLevelDpadInput(&cursor->selection, cursor->numItems, 0)) {
                 ++dpadInputValid;
             }
-        } else if (gSystem.newAndRepeatedKeys & PAD_KEY_DOWN) {
+        } else if (gSystem.newKeys & PAD_KEY_DOWN) {
             if (handlePartyMenuTopLevelDpadInput(&cursor->selection, cursor->numItems, 1)) {
                 ++dpadInputValid;
             }
-        } else if (gSystem.newAndRepeatedKeys & PAD_KEY_LEFT || gSystem.newAndRepeatedKeys & PAD_KEY_RIGHT) {
+        } else if (gSystem.newKeys & PAD_KEY_LEFT || gSystem.newKeys & PAD_KEY_RIGHT) {
             if (handlePartyMenuTopLevelDpadInput(&cursor->selection, cursor->numItems, 2)) {
                 ++dpadInputValid;
             }
@@ -1262,11 +1262,11 @@ u32 PartyMenu_HandleSubcontextMenuInput_TopLevel(PartyMenu *partyMenu, PartyMenu
             return LIST_NOTHING_CHOSEN;
         }
     } else {
-        if (gSystem.newAndRepeatedKeys & PAD_KEY_UP) {
+        if (gSystem.newKeys & PAD_KEY_UP) {
             if (handlePartyContextMenuDpadInput(&cursor->selection, cursor->numItems, 0)) {
                 ++dpadInputValid;
             }
-        } else if (gSystem.newAndRepeatedKeys & PAD_KEY_DOWN) {
+        } else if (gSystem.newKeys & PAD_KEY_DOWN) {
             if (handlePartyContextMenuDpadInput(&cursor->selection, cursor->numItems, 1)) {
                 ++dpadInputValid;
             }
