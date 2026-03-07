@@ -1341,13 +1341,13 @@ static BOOL PartyMenu_HandleDpadInput(PartyMenu *partyMenu) {
     // Routine to get the dpad input. If none detected, return FALSE.
     direction = DIR_MAX;
 
-    if (gSystem.newAndRepeatedKeys & PAD_KEY_UP) {
+    if (gSystem.newKeys & PAD_KEY_UP) {
         direction = DIR_NORTH;
-    } else if (gSystem.newAndRepeatedKeys & PAD_KEY_DOWN) {
+    } else if (gSystem.newKeys & PAD_KEY_DOWN) {
         direction = DIR_SOUTH;
-    } else if (gSystem.newAndRepeatedKeys & PAD_KEY_LEFT) {
+    } else if (gSystem.newKeys & PAD_KEY_LEFT) {
         direction = DIR_WEST;
-    } else if (gSystem.newAndRepeatedKeys & PAD_KEY_RIGHT) {
+    } else if (gSystem.newKeys & PAD_KEY_RIGHT) {
         direction = DIR_EAST;
     }
 

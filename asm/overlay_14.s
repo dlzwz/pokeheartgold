@@ -13162,7 +13162,7 @@ ov14_021EBE68: ; 0x021EBE68
 	add r4, r0, #0
 	ldr r0, [r4, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	mov r1, #3
 	mvn r1, r1
 	cmp r0, r1
@@ -15768,7 +15768,7 @@ ov14_021ED414: ; 0x021ED414
 	add r4, r0, #0
 	ldr r0, [r4, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	mov r1, #3
 	mvn r1, r1
 	cmp r0, r1
@@ -16283,7 +16283,7 @@ ov14_021ED820: ; 0x021ED820
 	add r4, r0, #0
 	ldr r0, [r4, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	mov r1, #2
 	mvn r1, r1
 	cmp r0, r1
@@ -17690,7 +17690,7 @@ ov14_021EE3C8: ; 0x021EE3C8
 	add r4, r0, #0
 	ldr r0, [r4, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	mov r1, #2
 	mvn r1, r1
 	cmp r0, r1
@@ -34806,7 +34806,7 @@ ov14_021F6BC0: ; 0x021F6BC0
 	add r6, r0, #0
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	add r4, r0, #0
 	cmp r4, #0xc
 	ldr r1, [r5, #0x34]
@@ -35163,7 +35163,7 @@ ov14_021F6E8C: ; 0x021F6E8C
 	add r6, r0, #0
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	add r4, r0, #0
 	cmp r4, #0x27
 	ldr r1, [r5, #0x34]
@@ -35306,7 +35306,7 @@ ov14_021F6F94: ; 0x021F6F94
 	add r6, r0, #0
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	add r4, r0, #0
 	mov r0, #0x2f
 	ldr r1, [r5, #0x34]
@@ -35476,7 +35476,7 @@ ov14_021F70C0: ; 0x021F70C0
 _021F70DE:
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	add r4, r0, #0
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
@@ -35799,7 +35799,7 @@ _021F735E:
 	bl GridInputHandler_ClearEnabledFlag
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	add r4, r0, #0
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
@@ -35818,7 +35818,7 @@ ov14_021F7388: ; 0x021F7388
 	add r6, r0, #0
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	add r4, r0, #0
 	mov r0, #0x2f
 	ldr r1, [r5, #0x34]
@@ -35970,7 +35970,7 @@ ov14_021F74B0: ; 0x021F74B0
 	add r6, r0, #0
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	add r4, r0, #0
 	mov r0, #0x2f
 	ldr r1, [r5, #0x34]
@@ -36121,7 +36121,7 @@ ov14_021F75C8: ; 0x021F75C8
 	add r6, r0, #0
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	add r4, r0, #0
 	mov r0, #0x2f
 	ldr r1, [r5, #0x34]
@@ -36725,7 +36725,7 @@ ov14_021F7A50: ; 0x021F7A50
 	bl GridInputHandler_ClearEnabledFlag
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]
-	bl GridInputHandler_HandleInput_AllowHold
+	bl GridInputHandler_HandleInput_NoHold
 	add r4, r0, #0
 	ldr r0, [r5, #0x34]
 	ldr r0, [r0, #0x2c]

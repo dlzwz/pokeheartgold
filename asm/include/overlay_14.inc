@@ -132,6 +132,7 @@
 .public sub_02019B44
 .public GridInputHandler_Create
 .public GridInputHandler_Free
+.public GridInputHandler_HandleInput_NoHold
 .public GridInputHandler_HandleInput_AllowHold
 .public GridInputHandler_GetNextInput
 .public GridInputHandler_GetUnk0F
