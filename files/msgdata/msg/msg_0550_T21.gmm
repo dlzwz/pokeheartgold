@@ -78,7 +78,7 @@
 	</row>
 	<row id="msg_0550_T21_00019" index="19">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">I battled the Trainers on the road.\nMy Pokémon lost.\rThey’re a mess! I must take them to\na Pokémon Center.</language>
+		<language name="English">I can help you\ntrade a Pokémon with yourself!\rThis lets you evolve Pokémon\nthat need to be traded!\rWould you like to try? {YESNO 0}</language>
 	</row>
 	<row id="msg_0550_T21_00020" index="20">
 		<attribute name="window_context_name">used</attribute>
@@ -99,5 +99,17 @@
 	<row id="msg_0550_T21_00024" index="24">
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">Guide Gent’s House\nFull-of-Energy, High-Speed Old Man</language>
+	</row>
+	<row id="msg_0550_T21_00025" index="25">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Come back anytime!</language>
+	</row>
+	<row id="msg_0550_T21_00026" index="26">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Maybe another time!</language>
+	</row>
+	<row id="msg_0550_T21_00027" index="27">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Youngster</language>
 	</row>
 </body>

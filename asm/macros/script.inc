@@ -4767,6 +4767,11 @@
 	.byte \arg1
 	.endm
 
+	.macro start_self_trade arg0
+	.short 853
+	.short \arg0
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script

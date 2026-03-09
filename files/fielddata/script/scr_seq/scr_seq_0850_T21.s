@@ -859,7 +859,43 @@ scr_seq_T21_006:
 	end
 
 scr_seq_T21_007:
-	simple_npc_msg msg_0550_T21_00019
+	play_se SEQ_SE_DP_SELECT
+	lockall
+	faceplayer
+	npc_msg msg_0550_T21_00019
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 0
+	goto_if_eq _T21_007_start
+	goto _T21_007_no
+
+_T21_007_start:
+	closemsg
+	fade_screen 6, 1, 0, RGB_BLACK
+	wait_fade
+	scrcmd_566
+	get_party_selection VAR_SPECIAL_RESULT
+	restore_overworld
+	fade_screen 6, 1, 1, RGB_BLACK
+	wait_fade
+	compare VAR_SPECIAL_RESULT, 255
+	goto_if_eq _T21_007_no
+	copyvar VAR_SPECIAL_x8004, VAR_SPECIAL_RESULT
+	start_self_trade VAR_SPECIAL_x8004
+	npc_trade_exec VAR_SPECIAL_x8004
+	npc_trade_end
+	npc_msg msg_0550_T21_00025
+	wait_button_or_walk_away
+	closemsg
+	releaseall
+	end
+
+_T21_007_no:
+	npc_msg msg_0550_T21_00026
+	wait_button_or_walk_away
+	closemsg
+	releaseall
 	end
 
 scr_seq_T21_008:

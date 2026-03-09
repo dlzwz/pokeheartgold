@@ -7,9 +7,12 @@
 #include "constants/npc_trade.h"
 
 #include "msgdata/msg.naix"
+#include "msgdata/msg/msg_0550_T21.h"
 
 #include "field_system.h"
 #include "gf_gfx_loader.h"
+#include "party.h"
+#include "player_data.h"
 #include "item.h"
 #include "mail.h"
 #include "map_header.h"
@@ -18,6 +21,11 @@
 #include "unk_02055418.h"
 #include "unk_0206D494.h"
 #include "update_dex_received.h"
+#include "unk_020755E8.h"
+#include "unk_02088288.h"
+#include "bag.h"
+#include "game_stats.h"
+#include "pokedex.h"
 
 static String *_GetNpcTradeName(enum HeapID heapID, s32 msgno);
 static void _CreateTradeMon(Pokemon *mon, NPCTrade *trade_dat, u32 level, NpcTradeNum tradeno, u32 mapno, u32 met_level_strat, enum HeapID heapID);
@@ -46,8 +54,64 @@ NPCTradeAppData *NPCTradeApp_Init(enum HeapID heapID, NpcTradeNum tradeno) {
     return ret;
 }
 
+NPCTradeAppData *SelfTrade_Init(enum HeapID heapID, FieldSystem *fieldSystem, int partySlot) {
+    NPCTradeAppData *ret;
+    Pokemon *partyMon;
+    u16 strbuf[128];
+
+    ret = Heap_Alloc(heapID, sizeof(NPCTradeAppData));
+    memset(ret, 0, sizeof(NPCTradeAppData));
+    ret->trade_dat = NULL;
+    ret->heapID = heapID;
+    ret->tradeno = (NpcTradeNum)0;
+    ret->mon = AllocMonZeroed(heapID);
+
+    partyMon = Party_GetMonByIndex(SaveArray_Party_Get(fieldSystem->saveData), partySlot);
+    CopyPokemonToPokemon(partyMon, ret->mon);
+
+    ret->profile = PlayerProfile_New(heapID);
+    PlayerProfile_Init(ret->profile);
+    {
+        String *name;
+        MsgData *msgData = NewMsgDataFromNarc(MSGDATA_LOAD_DIRECT, NARC_msgdata_msg, NARC_msg_msg_0550_T21_bin, heapID);
+        name = NewString_ReadMsgData(msgData, msg_0550_T21_00027);
+        CopyStringToU16Array(name, strbuf, 128);
+        String_Delete(name);
+        DestroyMsgData(msgData);
+    }
+    Save_Profile_PlayerName_Set(ret->profile, strbuf);
+
+    return ret;
+}
+
+EvolutionTaskData *NpcTrade_StartEvolution(FieldSystem *fieldSystem, int slot) {
+    Party *party = SaveArray_Party_Get(fieldSystem->saveData);
+    Pokemon *mon = Party_GetMonByIndex(party, slot);
+    int heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
+    int evolutionCondition;
+    int species = GetMonEvolution(NULL, mon, EVOCTX_TRADE, (u16)heldItem, &evolutionCondition);
+    if (species == SPECIES_NONE) {
+        return NULL;
+    }
+    Heap_Create(HEAP_ID_3, HEAP_ID_26, 0x30000);
+    return sub_02075A7C(NULL, mon, species,
+        Save_PlayerData_GetOptionsAddr(fieldSystem->saveData),
+        sub_02088288(fieldSystem->saveData),
+        Save_Pokedex_Get(fieldSystem->saveData),
+        Save_Bag_Get(fieldSystem->saveData),
+        Save_GameStats_Get(fieldSystem->saveData),
+        evolutionCondition, 4, HEAP_ID_26);
+}
+
+void NpcTrade_EndEvolution(EvolutionTaskData *evoData) {
+    sub_02075D4C(evoData);
+    Heap_Destroy(HEAP_ID_26);
+}
+
 void NPCTradeApp_Delete(NPCTradeAppData *work) {
-    Heap_Free(work->trade_dat);
+    if (work->trade_dat != NULL) {
+        Heap_Free(work->trade_dat);
+    }
     Heap_Free(work->mon);
     Heap_Free(work->profile);
     Heap_Free(work);
@@ -160,7 +224,9 @@ void NPCTrade_CreateTradeAnim(FieldSystem *fieldSystem, NPCTradeAppData *work, i
     u32 time_of_day;
 
     my_poke = Party_GetMonByIndex(SaveArray_Party_Get(fieldSystem->saveData), slot);
-    _CreateTradeMon(work->mon, work->trade_dat, GetMonData(my_poke, MON_DATA_LEVEL, NULL), work->tradeno, fieldSystem->location->mapId, 1, work->heapID);
+    if (work->trade_dat != NULL) {
+        _CreateTradeMon(work->mon, work->trade_dat, GetMonData(my_poke, MON_DATA_LEVEL, NULL), work->tradeno, fieldSystem->location->mapId, 1, work->heapID);
+    }
     CopyPokemonToPokemon(my_poke, my_mon_buf);
     CopyPokemonToPokemon(work->mon, trade_mon_buf);
     anim_work->my_boxmon = Mon_GetBoxMon(my_mon_buf);
