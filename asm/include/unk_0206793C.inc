@@ -18,3 +18,6 @@
 .public TradeSequence_Init
 .public TradeSequence_Exit
 .public TradeSequence_Main
+.public NpcTrade_StartEvolution
+.public NpcTrade_EndEvolution
+.public sub_02075D3C

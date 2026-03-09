@@ -6,6 +6,7 @@
 #include "heap.h"
 #include "script.h"
 #include "trade_anim.h"
+#include "unk_020755E8.h"
 
 typedef struct NPCTrade {
     int give_species;
@@ -40,6 +41,9 @@ typedef struct NPCTradeAppData {
 } NPCTradeAppData;
 
 NPCTradeAppData *NPCTradeApp_Init(enum HeapID heapID, NpcTradeNum tradeno);
+NPCTradeAppData *SelfTrade_Init(enum HeapID heapID, FieldSystem *fieldSystem, int partySlot);
+EvolutionTaskData *NpcTrade_StartEvolution(FieldSystem *fieldSystem, int slot);
+void NpcTrade_EndEvolution(EvolutionTaskData *evoData);
 void NPCTradeApp_Delete(NPCTradeAppData *work);
 void NPCTrade_MakeAndGiveLoanMon(FieldSystem *fieldSystem, NpcTradeNum tradeno, u8 level, u16 mapno);
 Mail *NPCTrade_MakeKenyaMail(void);

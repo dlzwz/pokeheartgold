@@ -3504,6 +3504,14 @@ BOOL ScrCmd_CheckReturnLoanMon(ScriptContext *ctx) {
     return FALSE;
 }
 
+BOOL ScrCmd_StartSelfTrade(ScriptContext *ctx) {
+    NPCTradeAppData **p_tradeWork = FieldSysGetAttrAddr(ctx->fieldSystem, SCRIPTENV_MISC_DATA_PTR);
+    u16 partySlot = ScriptGetVar(ctx);
+    HandleLoadOverlay(FS_OVERLAY_ID(npc_trade), OVY_LOAD_ASYNC);
+    *p_tradeWork = SelfTrade_Init(HEAP_ID_FIELD2, ctx->fieldSystem, partySlot);
+    return FALSE;
+}
+
 BOOL ScrCmd_475(ScriptContext *ctx) {
     // dummy
     return FALSE;

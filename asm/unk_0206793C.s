@@ -42,7 +42,7 @@ Task_NPCTrade: ; 0x0206795C
 	bl TaskManager_GetEnvironment
 	add r4, r0, #0
 	ldr r0, [r4, #4]
-	cmp r0, #6
+	cmp r0, #8
 	bhi _02067A16
 	add r0, r0, r0
 	add r0, pc
@@ -55,9 +55,11 @@ _02067982: ; jump table
 	.short _020679B8 - _02067982 - 2 ; case 1
 	.short _020679C6 - _02067982 - 2 ; case 2
 	.short _020679D4 - _02067982 - 2 ; case 3
-	.short _020679E2 - _02067982 - 2 ; case 4
-	.short _020679F0 - _02067982 - 2 ; case 5
-	.short _020679FE - _02067982 - 2 ; case 6
+	.short _NpcTrade_EvoCheck - _02067982 - 2 ; case 4
+	.short _NpcTrade_EvoWait - _02067982 - 2 ; case 5
+	.short _020679E2 - _02067982 - 2 ; case 6
+	.short _020679F0 - _02067982 - 2 ; case 7
+	.short _020679FE - _02067982 - 2 ; case 8
 _02067990:
 	ldr r0, [r4, #0x24]
 	add r3, r4, #0
@@ -105,6 +107,33 @@ _020679E2:
 	add r0, r0, #1
 	str r0, [r4, #4]
 	b _02067A16
+_NpcTrade_EvoCheck:
+	add r0, r6, #0
+	ldr r1, [r4, #8]
+	bl NpcTrade_StartEvolution
+	cmp r0, #0
+	beq _NpcTrade_EvoSkip
+	str r0, [r4, #0x2c]
+	ldr r0, [r4, #4]
+	add r0, r0, #1
+	str r0, [r4, #4]
+	b _02067A16
+_NpcTrade_EvoSkip:
+	ldr r0, [r4, #4]
+	add r0, r0, #2
+	str r0, [r4, #4]
+	b _02067A16
+_NpcTrade_EvoWait:
+	ldr r0, [r4, #0x2c]
+	bl sub_02075D3C
+	cmp r0, #0
+	beq _02067A16
+	ldr r0, [r4, #0x2c]
+	bl NpcTrade_EndEvolution
+	ldr r0, [r4, #4]
+	add r0, r0, #1
+	str r0, [r4, #4]
+	b _02067A16
 _020679F0:
 	add r0, r5, #0
 	bl CallTask_FadeFromBlack
@@ -134,12 +163,12 @@ CallTask_NPCTrade: ; 0x02067A1C
 	add r7, r0, #0
 	add r5, r1, #0
 	add r0, r3, #0
-	mov r1, #0x2c
+	mov r1, #0x30
 	add r6, r2, #0
 	str r3, [sp]
 	bl Heap_Alloc
 	mov r1, #0
-	mov r2, #0x2c
+	mov r2, #0x30
 	add r4, r0, #0
 	bl memset
 	mov r0, #0
