@@ -460,6 +460,11 @@ _021E6BDE:
 	lsl r0, r0, #0x1e
 	lsr r0, r0, #0x1f
 	beq _021E6C02
+	ldrh r0, [r5, #8]
+	mov r1, #2
+	lsl r1, r1, #8
+	tst r0, r1
+	bne _021E6C02
 	add r0, r4, #0
 	bl ov01_021E7114
 	cmp r0, #0
