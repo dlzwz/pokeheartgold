@@ -151,18 +151,10 @@ BOOL ov36_App_MainMenu_SelectOption_Continue_AppInit(OverlayManager *man, int *s
 BOOL ov36_App_MainMenu_SelectOption_Continue_AppExec(OverlayManager *man, int *state) {
     struct UnkStruct_02111868_sub *unk_work = OverlayManager_GetArgs(man);
     SaveData *saveData = unk_work->saveData;
-    SysInfo *sys_info = Save_SysInfo_Get(saveData);
 
     Continue_LoadSaveData_HandleError(HEAPID_OV36, saveData);
 
     Options_SetButtonModeOnMain(saveData, 0);
-
-    if (!Save_SysInfo_MacAddressIsMine(sys_info) || !Save_SysInfo_RTCOffsetIsMine(sys_info)) {
-        SysInfoRTC_HandleContinueOnNewConsole(Save_SysInfo_RTC_Get(saveData));
-        Save_BerryPotRTC_Init(Save_BerryPotRTC_Get(saveData));
-        Save_SysInfo_InitFromSystem(sys_info);
-        Party_ResetAllShayminToLandForm(SaveArray_Party_Get(saveData));
-    }
 
     sub_0201838C(Save_PlayerData_GetIGTAddr(saveData));
 
