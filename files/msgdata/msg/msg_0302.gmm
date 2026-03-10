@@ -811,4 +811,12 @@
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">{ALN_CENTER}Switch</language>
 	</row>
+	<row id="msg_0302_00195" index="195">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">INDIV. VALUES</language>
+	</row>
+	<row id="msg_0302_00196" index="196">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">EFFORT VALUES</language>
+	</row>
 </body>
