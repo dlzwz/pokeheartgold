@@ -28,6 +28,7 @@
 .public AddTextPrinterParameterizedWithColor
 .public String_Delete
 .public String_Compare
+.public GetMonData
 .public AllocMonZeroed
 .public CopyBoxPokemonToPokemon
 .public GetMoveAttr

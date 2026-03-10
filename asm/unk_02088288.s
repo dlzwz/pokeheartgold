@@ -1107,6 +1107,27 @@ _02088BA6:
 	bl sub_0208B044
 	pop {r4, r5, r6, pc}
 _02088BD2:
+	mov r0, #8
+	tst r0, r1
+	beq _02088BD2_checkA
+	sub r0, r2, #3
+	ldrsb r0, [r5, r0]
+	cmp r0, #1
+	bne _02088BD2_checkA
+	ldr r0, _02088B40_skillsView ; =0x000007CF
+	ldrb r1, [r5, r0]
+	add r1, r1, #1
+	cmp r1, #3
+	blt _02088BD2_storeView
+	mov r1, #0
+_02088BD2_storeView:
+	strb r1, [r5, r0]
+	add r0, r5, #0
+	bl sub_0208CBD4
+	mov r0, #2
+	pop {r4, r5, r6, pc}
+_02088BD2_checkA:
+	ldr r1, [r3, #0x48]
 	mov r0, #1
 	tst r0, r1
 	beq _02088C12
@@ -1258,6 +1279,7 @@ _02088D08: .word 0x000005DD
 _02088D0C: .word 0x000007C4
 _02088D10: .word 0x000007BC
 _02088D14: .word 0x000007C6
+_02088B40_skillsView: .word 0x000007CF
 	thumb_func_end sub_02088B40
 
 	thumb_func_start sub_02088D18
@@ -3369,12 +3391,15 @@ _02089E66:
 	mov r0, ip
 	cmp r1, r0
 	beq _02089E7A
+	ldr r0, _02089E80_skillsView ; =0x000007CF
+	strb r7, [r3, r0]
 	add r0, r3, #0
 	bl sub_02089E14
 _02089E7A:
 	pop {r3, r4, r5, r6, r7, pc}
 	.balign 4, 0
 _02089E7C: .word 0x000007BC
+_02089E80_skillsView: .word 0x000007CF
 	thumb_func_end sub_02089E30
 
 	thumb_func_start sub_02089E80

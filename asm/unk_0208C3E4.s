@@ -1683,10 +1683,43 @@ _0208D174: .word 0x00010200
 sub_0208D178: ; 0x0208D178
 	push {r3, r4, r5, lr}
 	sub sp, #0x18
+	add r4, r0, #0
+	; Determine tab msgID based on skillsView (0=SKILLS 1=IV 2=EV)
+	mov r0, #0x7
+	lsl r0, r0, #8
+	add r0, #0xcf
+	ldrb r5, [r4, r0]       ; r5 = skillsView
+	cmp r5, #1
+	beq _0208D178_tabIV
+	cmp r5, #2
+	beq _0208D178_tabEV
+	mov r2, #0x6d
+	b _0208D178_drawTab
+_0208D178_tabIV:
+	mov r2, #0xc3
+	b _0208D178_drawTab
+_0208D178_tabEV:
+	mov r2, #0xc4
+_0208D178_drawTab:
+	str r2, [sp, #4]
+	add r0, r4, #0
+	add r0, #0x24
+	mov r1, #0
+	bl FillWindowPixelBuffer
+	ldr r2, [sp, #4]
+	mov r0, #0
+	str r0, [sp]
+	mov r3, #0x0e
+	lsl r3, r3, #8
+	add r3, #0x0f
+	lsl r3, r3, #8
+	add r0, r4, #0
+	mov r1, #2
+	bl sub_0208C850
 	mov r3, #0
 	mov r1, #0x10
 	mov r2, #0x6f
-	add r4, r0, #0
+	add r0, r4, #0
 	str r3, [sp]
 	bl sub_0208C7F8
 	mov r0, #0
@@ -1794,6 +1827,10 @@ sub_0208D178: ; 0x0208D178
 	mov r1, #0
 	add r0, #0x70
 	bl FillWindowPixelBuffer
+	cmp r5, #0
+	beq _0208D178_normal
+	b _0208D178_ivev
+_0208D178_normal:
 	mov r0, #0x89
 	lsl r0, r0, #2
 	ldr r0, [r4, r0]
@@ -1901,6 +1938,7 @@ sub_0208D178: ; 0x0208D178
 	add r1, #0x50
 	mov r3, #1
 	bl sub_0208C778
+_0208D178_ability:
 	ldr r2, _0208D464 ; =0x00000262
 	ldr r0, _0208D468 ; =0x000007A8
 	ldrb r2, [r4, r2]
@@ -1998,6 +2036,260 @@ sub_0208D178: ; 0x0208D178
 	bl ScheduleWindowCopyToVram
 	add sp, #0x18
 	pop {r3, r4, r5, pc}
+_0208D178_ivev:
+	; Check mode to determine BoxMon vs Pokemon
+	mov r0, #0x8b
+	lsl r0, r0, #2
+	ldr r0, [r4, r0]
+	ldrb r0, [r0, #0x11]
+	cmp r0, #2
+	bne _0208D178_mon_direct
+	; mode==2: BoxMon path
+	add r0, r4, #0
+	bl sub_0208A520
+	add r3, r0, #0
+	mov r0, #0x13
+	bl AllocMonZeroed
+	str r0, [sp, #4]
+	add r1, r0, #0
+	add r0, r3, #0
+	bl CopyBoxPokemonToPokemon
+	ldr r5, [sp, #4]
+	b _0208D178_do_ivev
+_0208D178_mon_direct:
+	; mode!=2: Pokemon path
+	add r0, r4, #0
+	bl sub_0208A520
+	add r5, r0, #0
+	mov r0, #0
+	str r0, [sp, #4]
+_0208D178_do_ivev:
+	; Cache window base at [sp+8]
+	mov r0, #0x89
+	lsl r0, r0, #2
+	ldr r0, [r4, r0]
+	str r0, [sp, #8]
+	; Reload skillsView to check IV vs EV
+	mov r0, #0x7
+	lsl r0, r0, #8
+	add r0, #0xcf
+	ldrb r0, [r4, r0]
+	cmp r0, #2
+	beq _0208D178_draw_ev
+_0208D178_draw_iv:
+	; HP IV (field 0x46, window +0x00)
+	add r0, r5, #0
+	mov r1, #0x46
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; ATK IV (field 0x47, window +0x10)
+	add r0, r5, #0
+	mov r1, #0x47
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x10
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; DEF IV (field 0x48, window +0x20)
+	add r0, r5, #0
+	mov r1, #0x48
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x20
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; SpATK IV (field 0x4A, window +0x30)
+	add r0, r5, #0
+	mov r1, #0x4a
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x30
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; SpDEF IV (field 0x4B, window +0x40)
+	add r0, r5, #0
+	mov r1, #0x4b
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x40
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; Speed IV (field 0x49, window +0x50)
+	add r0, r5, #0
+	mov r1, #0x49
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x50
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	b _0208D178_ivev_done
+_0208D178_draw_ev:
+	; HP EV (field 0x0D, window +0x00)
+	add r0, r5, #0
+	mov r1, #0x0d
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; ATK EV (field 0x0E, window +0x10)
+	add r0, r5, #0
+	mov r1, #0x0e
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x10
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; DEF EV (field 0x0F, window +0x20)
+	add r0, r5, #0
+	mov r1, #0x0f
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x20
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; SpATK EV (field 0x11, window +0x30)
+	add r0, r5, #0
+	mov r1, #0x11
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x30
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; SpDEF EV (field 0x12, window +0x40)
+	add r0, r5, #0
+	mov r1, #0x12
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x40
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+	; Speed EV (field 0x10, window +0x50)
+	add r0, r5, #0
+	mov r1, #0x10
+	bl GetMonData
+	mov r2, r0
+	mov r0, #0
+	str r0, [sp]
+	add r0, r4, #0
+	mov r1, #0x78
+	mov r3, #3
+	bl sub_0208C87C
+	ldr r1, [sp, #8]
+	add r1, #0x50
+	ldr r2, _0208D458
+	add r0, r4, #0
+	mov r3, #1
+	bl sub_0208C778
+_0208D178_ivev_done:
+	; Free alloc if needed
+	ldr r0, [sp, #4]
+	cmp r0, #0
+	bne _0208D178_free_alloc
+	b _0208D178_ability
+_0208D178_free_alloc:
+	bl Heap_Free
+	b _0208D178_ability
 	nop
 _0208D458: .word 0x00010200
 _0208D45C: .word 0x0000025A
