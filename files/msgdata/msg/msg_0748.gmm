@@ -2,11 +2,11 @@
 <body language="English">
 	<row id="msg_0748_00000" index="0">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">{STRVAR_1 6, 0, 0}{CURSOR_X 120}{STRVAR_1 51, 1, 0} BP</language>
+		<language name="English">{STRVAR_1 6, 0, 0}</language>
 	</row>
 	<row id="msg_0748_00001" index="1">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">{STRVAR_1 6, 0, 0}\n           {STRVAR_1 51, 1, 0} BP</language>
+		<language name="English">{STRVAR_1 6, 0, 0}</language>
 	</row>
 	<row id="msg_0748_00002" index="2">
 		<attribute name="window_context_name">used</attribute>
@@ -18,7 +18,7 @@
 	</row>
 	<row id="msg_0748_00004" index="4">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">If you’ve become a bit of a fanatic\nabout battles, I’m the guy who can\fteach your Pokémon all kinds of moves.\rMay I teach your Pokémon\nmoves in exchange for BP? {YESNO 0}</language>
+		<language name="English">If you’ve become a bit of a fanatic\nabout battles, I’m the guy who can\fteach your Pokémon all kinds of moves.\rMay I teach your Pokémon\na move? {YESNO 0}</language>
 	</row>
 	<row id="msg_0748_00005" index="5">
 		<attribute name="window_context_name">used</attribute>
@@ -66,7 +66,7 @@
 	</row>
 	<row id="msg_0748_00016" index="16">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">If you’ve poured your whole life into\nPokémon battles, I’m the guy who can\fteach your Pokémon all kinds of moves.\rMay I teach your Pokémon\nmoves in exchange for BP? {YESNO 0}</language>
+		<language name="English">If you’ve poured your whole life into\nPokémon battles, I’m the guy who can\fteach your Pokémon all kinds of moves.\rMay I teach your Pokémon\na move? {YESNO 0}</language>
 	</row>
 	<row id="msg_0748_00017" index="17">
 		<attribute name="window_context_name">used</attribute>
@@ -114,7 +114,7 @@
 	</row>
 	<row id="msg_0748_00028" index="28">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">If you’ve poured your heart and soul\ninto Pokémon battles, I’m the guy who\fcan teach your Pokémon all kinds\fof moves.\rMay I teach your Pokémon\nmoves in exchange for BP? {YESNO 0}</language>
+		<language name="English">If you’ve poured your heart and soul\ninto Pokémon battles, I’m the guy who\fcan teach your Pokémon all kinds\fof moves.\rMay I teach your Pokémon\na move? {YESNO 0}</language>
 	</row>
 	<row id="msg_0748_00029" index="29">
 		<attribute name="window_context_name">used</attribute>
@@ -158,7 +158,7 @@
 	</row>
 	<row id="msg_0748_00039" index="39">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">Until next time!\nCome back whenever you’ve got\fBattle Points to spend!</language>
+		<language name="English">Until next time!\nFeel free to come back anytime!</language>
 	</row>
 	<row id="msg_0748_00040" index="40">
 		<attribute name="window_context_name">used</attribute>
