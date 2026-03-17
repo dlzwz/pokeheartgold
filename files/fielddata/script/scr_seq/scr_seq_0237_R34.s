@@ -51,16 +51,6 @@ _009F:
 _00A9:
 	clearflag FLAG_HIDE_CAMERON
 _00AD:
-	scrcmd_379 VAR_TEMP_x4000
-	compare VAR_TEMP_x4000, 3
-	goto_if_eq _00D5
-	compare VAR_TEMP_x4000, 4
-	goto_if_eq _00D5
-	clearflag FLAG_UNK_1D1
-	setflag FLAG_UNK_1D2
-	end
-
-_00D5:
 	clearflag FLAG_UNK_1D2
 	setflag FLAG_UNK_1D1
 	end
