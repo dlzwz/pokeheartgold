@@ -775,13 +775,9 @@ static u8 ComputeCompatibilityBetweenBoxMons(BoxPokemon **parents) {
     if (eggGroups[0][0] == EGG_GROUP_DITTO && eggGroups[1][0] == EGG_GROUP_DITTO) {
         return 0;
     }
-    // If one is a Ditto, treat as not same species. See below
+    // If one is a Ditto, guarantee egg
     if (eggGroups[0][0] == EGG_GROUP_DITTO || eggGroups[1][0] == EGG_GROUP_DITTO) {
-        if (otIds[0] == otIds[1]) {
-            return 20;
-        } else {
-            return 50;
-        }
+        return 100;
     }
     // LGBT cannot breed in gen 4
     if (genders[0] == genders[1]) {
