@@ -260,6 +260,7 @@ Static main
     Object src/pokemon.o
     Object src/move.o
     Object src/trainer_data.o
+    Object src/trainer_ev_data.o
     Object src/pokemon_storage_system.o
     Object src/pokemon_icon_idx.o
     Object src/party.o
