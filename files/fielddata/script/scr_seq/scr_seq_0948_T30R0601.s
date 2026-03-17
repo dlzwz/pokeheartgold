@@ -107,10 +107,6 @@ scr_seq_T30R0601_001:
 	lockall
 	faceplayer
 	goto_if_unset FLAG_MET_MOVE_MANIAC, _0238
-	hasitem ITEM_HEART_SCALE, 1, VAR_SPECIAL_RESULT
-	compare VAR_SPECIAL_RESULT, 0
-	goto_if_eq _022D
-	npc_msg msg_0635_T30R0601_00010
 	npc_msg msg_0635_T30R0601_00012
 	closemsg
 	fade_screen 6, 1, 0, RGB_BLACK
@@ -139,8 +135,6 @@ scr_seq_T30R0601_001:
 	wait_fade
 	compare VAR_SPECIAL_RESULT, 255
 	goto_if_eq _022D
-	takeitem ITEM_HEART_SCALE, 1, VAR_SPECIAL_RESULT
-	buffer_players_name 3
 	npc_msg msg_0635_T30R0601_00025
 	wait_button_or_walk_away
 	closemsg
