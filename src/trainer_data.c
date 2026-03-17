@@ -1,4 +1,5 @@
 #include "trainer_data.h"
+#include "trainer_ev_data.h"
 
 #include "global.h"
 
@@ -268,6 +269,18 @@ TrainerGender TrainerClass_GetGenderOrTrainerCount(int trainerClass) {
 void TrMon_OverridePidGender(int species, int form, int overrideParam, u32 *pid);
 void TrMon_FrustrationCheckAndSetFriendship(Pokemon *mon);
 
+static void ApplyTrainerMonEVs(u16 trainerId, int slot, Pokemon *mon) {
+    const TrainerEVEntry *entry = TrainerEV_GetEntry(trainerId);
+    if (entry == NULL) return;
+    SetMonData(mon, MON_DATA_HP_EV,    &entry->monEvs[slot].hp);
+    SetMonData(mon, MON_DATA_ATK_EV,   &entry->monEvs[slot].atk);
+    SetMonData(mon, MON_DATA_DEF_EV,   &entry->monEvs[slot].def);
+    SetMonData(mon, MON_DATA_SPEED_EV, &entry->monEvs[slot].spe);
+    SetMonData(mon, MON_DATA_SPATK_EV, &entry->monEvs[slot].spa);
+    SetMonData(mon, MON_DATA_SPDEF_EV, &entry->monEvs[slot].spd);
+    CalcMonStats(mon);
+}
+
 void CreateNPCTrainerParty(BattleSetup *enemies, int partyIndex, enum HeapID heapID) {
     TRPOKE *data; // sp74
     int i;
@@ -344,6 +357,7 @@ void CreateNPCTrainerParty(BattleSetup *enemies, int partyIndex, enum HeapID hea
             // Starting in HGSS, an AI Pokemon with Frustration
             // will have minimum friendship.
             TrMon_FrustrationCheckAndSetFriendship(mon);
+            ApplyTrainerMonEVs(enemies->trainerId[partyIndex], i, mon);
             Party_AddMon(enemies->party[partyIndex], mon);
         }
         break;
@@ -371,6 +385,7 @@ void CreateNPCTrainerParty(BattleSetup *enemies, int partyIndex, enum HeapID hea
             SetTrMonCapsule(monSpeciesMoves[i].capsule, mon, heapID);
             SetMonData(mon, MON_DATA_FORM, &form);
             TrMon_FrustrationCheckAndSetFriendship(mon);
+            ApplyTrainerMonEVs(enemies->trainerId[partyIndex], i, mon);
             Party_AddMon(enemies->party[partyIndex], mon);
         }
         break;
@@ -396,6 +411,7 @@ void CreateNPCTrainerParty(BattleSetup *enemies, int partyIndex, enum HeapID hea
             SetTrMonCapsule(monSpeciesItem[i].capsule, mon, heapID);
             SetMonData(mon, MON_DATA_FORM, &form);
             TrMon_FrustrationCheckAndSetFriendship(mon);
+            ApplyTrainerMonEVs(enemies->trainerId[partyIndex], i, mon);
             Party_AddMon(enemies->party[partyIndex], mon);
         }
         break;
@@ -424,6 +440,7 @@ void CreateNPCTrainerParty(BattleSetup *enemies, int partyIndex, enum HeapID hea
             SetTrMonCapsule(monSpeciesItemMoves[i].capsule, mon, heapID);
             SetMonData(mon, MON_DATA_FORM, &form);
             TrMon_FrustrationCheckAndSetFriendship(mon);
+            ApplyTrainerMonEVs(enemies->trainerId[partyIndex], i, mon);
             Party_AddMon(enemies->party[partyIndex], mon);
         }
         break;
