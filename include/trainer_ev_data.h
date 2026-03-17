@@ -18,6 +18,7 @@ typedef struct {
 typedef struct {
     u16 trainerId;
     TrainerMonEVs monEvs[TRAINER_EV_PARTY_SIZE];
+    u8 monNatures[TRAINER_EV_PARTY_SIZE]; // NATURE_* or 0xFF = no override
 } TrainerEVEntry;
 
 const TrainerEVEntry *TrainerEV_GetEntry(u16 trainerId);

@@ -1,4 +1,6 @@
 #include "constants/balls.h"
+#include "constants/map_sections.h"
+#include "constants/moves.h"
 
 #include "bag.h"
 #include "field_system.h"
