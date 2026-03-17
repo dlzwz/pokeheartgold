@@ -594,7 +594,7 @@ void sub_0207F178(PartyMenu *partyMenu) {
                 animSeqNo = sub_0207F11C(monDraw);
             }
             sub_0207F0FC(monDraw->iconSprite, animSeqNo);
-            Sprite_UpdateAnim(monDraw->iconSprite, FX32_ONE);
+            Sprite_UpdateAnim(monDraw->iconSprite, FX32_ONE / 2);
             if (partyMenu->partyMonIndex == i && animSeqNo != 0 && animSeqNo != 5) {
                 if (Sprite_GetAnimationFrame(monDraw->iconSprite) == 0) {
                     Sprite_SetPositionXY(monDraw->iconSprite, monDraw->iconX, monDraw->iconY - 3);
