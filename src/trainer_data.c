@@ -269,6 +269,33 @@ TrainerGender TrainerClass_GetGenderOrTrainerCount(int trainerClass) {
 void TrMon_OverridePidGender(int species, int form, int overrideParam, u32 *pid);
 void TrMon_FrustrationCheckAndSetFriendship(Pokemon *mon);
 
+// Adjust a trainer Pokemon's personality so that (personality % 25) equals
+// the desired nature for this slot, while keeping the gender byte (bits 0-7)
+// and block-order bits (13-17) unchanged.  Called BEFORE CreateMon so all
+// internal encryption and stat initialisation use the correct PID from the
+// start — modifying personality post-CreateMon via SetMonData is unsafe
+// because the party-data encryption key would change mid-setup.
+// Only bits 8-12 are varied (32 candidates); gcd(256,25)=1 guarantees a
+// solution within 25 iterations.
+static u32 AdjustPersonalityForNature(u16 trainerId, int slot, u32 personality) {
+    const TrainerEVEntry *entry = TrainerEV_GetEntry(trainerId);
+    u8 desiredNature;
+    u8 genderByte;
+    u32 base;
+    u32 k;
+    if (entry == NULL || entry->monNatures[slot] == 0xFF) {
+        return personality;
+    }
+    desiredNature = entry->monNatures[slot];
+    genderByte    = (u8)(personality & 0xFF);
+    base          = personality & 0xFFFFE000; // preserve bits 13-31
+    for (k = 0; k < 32; k++) {
+        personality = base | (k << 8) | genderByte;
+        if ((personality % 25) == desiredNature) break;
+    }
+    return personality;
+}
+
 static void ApplyTrainerMonEVs(u16 trainerId, int slot, Pokemon *mon) {
     const TrainerEVEntry *entry = TrainerEV_GetEntry(trainerId);
     if (entry == NULL) return;
@@ -340,6 +367,7 @@ void CreateNPCTrainerParty(BattleSetup *enemies, int partyIndex, enum HeapID hea
                 personality = LCRandom();
             }
             personality = (personality << 8) + pidGender;
+            personality = AdjustPersonalityForNature(enemies->trainerId[partyIndex], i, personality);
 
             // Difficulty is a number between 0 and 250 which directly corresponds
             // to the (uniform) IV spread of the generated Pokemon.
@@ -377,6 +405,7 @@ void CreateNPCTrainerParty(BattleSetup *enemies, int partyIndex, enum HeapID hea
                 personality = LCRandom();
             }
             personality = (personality << 8) + pidGender;
+            personality = AdjustPersonalityForNature(enemies->trainerId[partyIndex], i, personality);
             iv = (u8)((monSpeciesMoves[i].difficulty * 31) / 255);
             CreateMon(mon, species, monSpeciesMoves[i].level, iv, TRUE, (s32)personality, OT_ID_RANDOM_NO_SHINY, 0);
             for (j = 0; j < MAX_MON_MOVES; j++) {
@@ -405,6 +434,7 @@ void CreateNPCTrainerParty(BattleSetup *enemies, int partyIndex, enum HeapID hea
                 personality = LCRandom();
             }
             personality = (personality << 8) + pidGender;
+            personality = AdjustPersonalityForNature(enemies->trainerId[partyIndex], i, personality);
             iv = (u8)((monSpeciesItem[i].difficulty * 31) / 255);
             CreateMon(mon, species, monSpeciesItem[i].level, iv, TRUE, (s32)personality, OT_ID_RANDOM_NO_SHINY, 0);
             SetMonData(mon, MON_DATA_HELD_ITEM, &monSpeciesItem[i].item);
@@ -431,6 +461,7 @@ void CreateNPCTrainerParty(BattleSetup *enemies, int partyIndex, enum HeapID hea
                 personality = LCRandom();
             }
             personality = (personality << 8) + pidGender;
+            personality = AdjustPersonalityForNature(enemies->trainerId[partyIndex], i, personality);
             iv = (u8)((monSpeciesItemMoves[i].difficulty * 31) / 255);
             CreateMon(mon, species, monSpeciesItemMoves[i].level, iv, TRUE, (s32)personality, OT_ID_RANDOM_NO_SHINY, 0);
             SetMonData(mon, MON_DATA_HELD_ITEM, &monSpeciesItemMoves[i].item);
