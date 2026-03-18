@@ -867,7 +867,7 @@ _02246AFA:
 	bne _02246BFE
 	ldr r0, _02246CC4 ; =gSystem
 	ldr r1, [r0, #0x48]
-	mov r0, #1
+	mov r0, #3 ; PAD_BUTTON_A | PAD_BUTTON_B
 	tst r0, r1
 	beq _02246B14
 	mov r0, #0xe
