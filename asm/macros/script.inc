@@ -4772,6 +4772,11 @@
 	.short \arg0
 	.endm
 
+	.macro reset_mon_evs party_pos
+	.short 854
+	.short \party_pos
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script

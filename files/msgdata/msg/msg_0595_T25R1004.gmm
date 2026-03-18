@@ -18,14 +18,26 @@
 	</row>
 	<row id="msg_0595_T25R1004_00004" index="4">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">Some Pokémon evolve only\nthrough trading.\rI know of four: MACHOKE, KADABRA,\nHAUNTER, and, um, GRAVELER.\fI heard there are others, too.</language>
+		<language name="English">Need to start fresh with one of\nyour Pokémon?\rI can clear away all the base points\na Pokémon has worked up.\rShall I clear them away? {YESNO 0}</language>
 	</row>
 	<row id="msg_0595_T25R1004_00005" index="5">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">Even Team Rocket wouldn’t steal their\nown members’ Pokémon, would they?</language>
+		<language name="English">Those Rocket thugs have me rattled.\nCome back when things settle down.</language>
 	</row>
 	<row id="msg_0595_T25R1004_00006" index="6">
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">Let Us Pump Up Your Pokémon!\n4F Medicine Box</language>
+	</row>
+	<row id="msg_0595_T25R1004_00007" index="7">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Sure you want {STRVAR_1 0, 0, 0} to\nlose all its base points? {YESNO 0}</language>
+	</row>
+	<row id="msg_0595_T25R1004_00008" index="8">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">{STRVAR_1 0, 0, 0}’s base points\nhave all been cleared!\rFresh start! Make the most of it.</language>
+	</row>
+	<row id="msg_0595_T25R1004_00009" index="9">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Come back if you change\nyour mind!</language>
 	</row>
 </body>
