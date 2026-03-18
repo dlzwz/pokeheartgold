@@ -94,54 +94,54 @@
 	</row>
 	<row id="msg_0509_T07R0501_00023" index="23">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">ENDURE\n2,000 Coins</language>
+		<language name="English">ENDURE\n20 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00024" index="24">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">DOUBLE TEAM\n4,000 Coins</language>
+		<language name="English">DOUBLE TEAM\n40 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00025" index="25">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">HIDDEN POWER\n6,000 Coins</language>
+		<language name="English">HIDDEN POWER\n60 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00026" index="26">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">PSYCHIC\n10,000 Coins</language>
+		<language name="English">PSYCHIC\n100 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00027" index="27">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">GYRO BALL\n10,000 Coins</language>
+		<language name="English">GYRO BALL\n100 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00028" index="28">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">GIGA IMPACT\n15,000 Coins</language>
+		<language name="English">GIGA IMPACT\n150 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00029" index="29">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">SILK SCARF\n1,000 Coins</language>
+		<language name="English">SILK SCARF\n10 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00030" index="30">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">WIDE LENS\n1,000 Coins</language>
+		<language name="English">WIDE LENS\n10 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00031" index="31">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">ZOOM LENS\n1,000 Coins</language>
+		<language name="English">ZOOM LENS\n10 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00032" index="32">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">METRONOME\n1,000 Coins</language>
+		<language name="English">METRONOME\n10 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00033" index="33">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">MR. MIME{CURSOR_X 90}3,333 Coins</language>
+		<language name="English">MR. MIME{CURSOR_X 90}33 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00034" index="34">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">EEVEE{CURSOR_X 90}6,666 Coins</language>
+		<language name="English">EEVEE{CURSOR_X 90}66 Coins</language>
 	</row>
 	<row id="msg_0509_T07R0501_00035" index="35">
 		<attribute name="window_context_name">used</attribute>
-		<language name="English">PORYGON{CURSOR_X 90}9,999 Coins</language>
+		<language name="English">PORYGON{CURSOR_X 90}99 Coins</language>
 	</row>
 </body>
