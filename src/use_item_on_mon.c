@@ -67,7 +67,7 @@ BOOL CanUseItemOnPokemon(Pokemon *mon, u16 itemID, s32 moveIdx, enum HeapID heap
         return TRUE;
     }
 
-    if (GetItemAttr_PreloadedItemData(itemData, ITEMATTR_LEVEL_UP) && GetMonData(mon, MON_DATA_LEVEL, NULL) < MAX_LEVEL) {
+    if (GetItemAttr_PreloadedItemData(itemData, ITEMATTR_LEVEL_UP) && GetMonData(mon, MON_DATA_LEVEL, NULL) < Pokemon_GetLevelCap()) {
         Heap_Free(itemData);
         return TRUE;
     }
@@ -292,7 +292,7 @@ BOOL UseItemOnPokemon(Pokemon *mon, u16 itemID, u16 moveIdx, u16 location, enum 
 
     sp5C = GetMonData(mon, MON_DATA_LEVEL, NULL);
     if (GetItemAttr_PreloadedItemData(itemData, ITEMATTR_LEVEL_UP)) {
-        if (sp5C < MAX_LEVEL) {
+        if (sp5C < Pokemon_GetLevelCap()) {
             AddMonData(mon, MON_DATA_EXPERIENCE, CalcMonExpToNextLevel(mon));
             CalcMonLevelAndStats(mon);
             if (sp54 == 0) {

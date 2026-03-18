@@ -5988,7 +5988,7 @@ static void Task_GetExp(SysTask *task, void *inData) {
         u32 totalExp = 0;
         msg.id = msg_0197_00001; // "{0} gained {1} Exp. Points!"
 
-        if (GetMonData(mon, MON_DATA_HP, NULL) && GetMonData(mon, MON_DATA_LEVEL, NULL) != 100) {
+        if (GetMonData(mon, MON_DATA_HP, NULL) && GetMonData(mon, MON_DATA_LEVEL, NULL) < Pokemon_GetLevelCap()) {
             if (data->ctx->unk_A4[side] & MaskOfFlagNo(slot)) {
                 totalExp = data->ctx->gainedExp;
             } else {
@@ -6016,6 +6016,14 @@ static void Task_GetExp(SysTask *task, void *inData) {
             u32 newExp = GetMonData(mon, MON_DATA_EXPERIENCE, NULL);
             data->unk30[3] = newExp - GetMonBaseExperienceAtCurrentLevel(mon);
             newExp += totalExp;
+
+            {
+                u32 capExp = GetMonExpBySpeciesAndLevel(
+                    GetMonData(mon, MON_DATA_SPECIES, NULL), Pokemon_GetLevelCap());
+                if (newExp > capExp) {
+                    newExp = capExp;
+                }
+            }
 
             if (slot == data->ctx->selectedMonIndex[expBattler]) {
                 data->ctx->battleMons[expBattler].exp = newExp;

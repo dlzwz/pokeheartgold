@@ -9,6 +9,7 @@
 #include "constants/moves.h"
 
 #include "game_stats.h"
+#include "pokemon.h"
 #include "gf_gfx_loader.h"
 #include "item.h"
 #include "map_section.h"
@@ -170,9 +171,13 @@ static int Save_Daycare_MoveMonToParty(Party *party, DaycareMon *daycareMon, Mes
     species = GetBoxMonData(boxMon, MON_DATA_SPECIES, NULL);
 
     CopyBoxPokemonToPokemon(boxMon, mon);
-    if (GetMonData(mon, MON_DATA_LEVEL, NULL) != MAX_LEVEL) {
+    if (GetMonData(mon, MON_DATA_LEVEL, NULL) < Pokemon_GetLevelCap()) {
+        u32 capExp = GetMonExpBySpeciesAndLevel(species, Pokemon_GetLevelCap());
         exp = GetMonData(mon, MON_DATA_EXPERIENCE, NULL);
         exp += DaycareMon_GetSteps(daycareMon);
+        if (exp > capExp) {
+            exp = capExp;
+        }
         SetMonData(mon, MON_DATA_EXPERIENCE, &exp);
         Daycare_LearnLevelUpMoves(mon);
     }

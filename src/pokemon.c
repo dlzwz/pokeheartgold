@@ -3,14 +3,19 @@
 #include "global.h"
 
 #include "constants/abilities.h"
+#include "constants/badge.h"
 #include "constants/balls.h"
 #include "constants/items.h"
 #include "constants/map_sections.h"
 #include "constants/moves.h"
 #include "constants/trainer_class.h"
+#include "constants/vars.h"
 
 #include "gf_rtc.h"
 #include "item.h"
+#include "player_data.h"
+#include "save.h"
+#include "sys_flags.h"
 #include "mail.h"
 #include "map_section.h"
 #include "math_util.h"
@@ -1405,13 +1410,15 @@ static void AddBoxMonDataInternal(BoxPokemon *boxMon, int attr, int value) {
     PokemonDataBlockD *blockD = &GetSubstruct(boxMon, boxMon->personality, 3)->blockD;
 
     switch (attr) {
-    case MON_DATA_EXPERIENCE:
-        if (blockA->exp + value > GetMonExpBySpeciesAndLevel(blockA->species, 100)) {
-            blockA->exp = GetMonExpBySpeciesAndLevel(blockA->species, 100);
+    case MON_DATA_EXPERIENCE: {
+        u32 capExp = GetMonExpBySpeciesAndLevel(blockA->species, Pokemon_GetLevelCap());
+        if (blockA->exp + value > capExp) {
+            blockA->exp = capExp;
         } else {
             blockA->exp += value;
         }
         break;
+    }
     case MON_DATA_FRIENDSHIP: {
         int friendship = blockA->friendship;
         if (friendship + value > FRIENDSHIP_MAX) {
@@ -2758,17 +2765,53 @@ BoxPokemon *Mon_GetBoxMon(Pokemon *mon) {
     return &mon->box;
 }
 
+u8 Pokemon_GetLevelCap(void)
+{
+    static const u8 sJohtoLevelCaps[] = { 12, 16, 18, 23, 28, 32, 32, 37, 46 };
+
+    SaveData      *saveData  = SaveData_Get();
+    PlayerProfile *profile   = Save_PlayerData_GetProfile(saveData);
+    SaveVarsFlags *varsFlags = Save_VarsFlags_Get(saveData);
+
+    // Red defeated → no cap
+    if (*Save_VarsFlags_GetVarAddr(varsFlags, VAR_UNK_40FD) != 0) {
+        return MAX_LEVEL;
+    }
+
+    // Blue (Earth Badge) → 82
+    if (profile->kantoBadges & (1 << (BADGE_EARTH - 8))) {
+        return 82;
+    }
+
+    // Lance / Champion 1 cleared → 55
+    if (PlayerProfile_GetGameClearFlag(profile)) {
+        return 55;
+    }
+
+    // Johto badge count → lookup
+    u8 johtoBadgeCount = 0;
+    {
+        u8 b;
+        for (b = profile->johtoBadges; b != 0; b >>= 1) {
+            if (b & 1) johtoBadgeCount++;
+        }
+    }
+    if (johtoBadgeCount > 8) johtoBadgeCount = 8;
+    return sJohtoLevelCaps[johtoBadgeCount];
+}
+
 BOOL Pokemon_TryLevelUp(Pokemon *mon) {
     u16 species = (u16)GetMonData(mon, MON_DATA_SPECIES, NULL);
     u8 level = (u8)(GetMonData(mon, MON_DATA_LEVEL, NULL) + 1);
     u32 exp = GetMonData(mon, MON_DATA_EXPERIENCE, NULL);
     u32 growthrate = (u32)GetMonBaseStat(species, BASE_GROWTH_RATE);
-    u32 maxexp = GetExpByGrowthRateAndLevel((int)growthrate, 100);
+    u8 levelCap = Pokemon_GetLevelCap();
+    u32 maxexp = GetExpByGrowthRateAndLevel((int)growthrate, levelCap);
     if (exp > maxexp) {
         exp = maxexp;
         SetMonData(mon, MON_DATA_EXPERIENCE, &exp);
     }
-    if (level > 100) {
+    if (level > levelCap) {
         return FALSE;
     }
     if (exp >= GetExpByGrowthRateAndLevel((int)growthrate, level)) {
