@@ -62,13 +62,54 @@ scr_seq_T25R1004_003:
 	lockall
 	faceplayer
 	compare VAR_SCENE_ROCKET_TAKEOVER, 3
-	goto_if_ne _00A2
+	goto_if_ne _T25R1004_003_main
 	npc_msg msg_0595_T25R1004_00005
-	goto _00A5
+	wait_button_or_walk_away
+	closemsg
+	releaseall
+	end
 
-_00A2:
+_T25R1004_003_main:
 	npc_msg msg_0595_T25R1004_00004
-_00A5:
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 0
+	goto_if_eq _T25R1004_003_select
+	goto _T25R1004_003_no
+
+_T25R1004_003_select:
+	closemsg
+	fade_screen 6, 1, 0, RGB_BLACK
+	wait_fade
+	scrcmd_566
+	get_party_selection VAR_SPECIAL_RESULT
+	restore_overworld
+	fade_screen 6, 1, 1, RGB_BLACK
+	wait_fade
+	compare VAR_SPECIAL_RESULT, 255
+	goto_if_eq _T25R1004_003_no
+	copyvar VAR_SPECIAL_x8004, VAR_SPECIAL_RESULT
+	buffer_mon_species_name 0, VAR_SPECIAL_x8004
+	npc_msg msg_0595_T25R1004_00007
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 0
+	goto_if_eq _T25R1004_003_do
+	goto _T25R1004_003_no
+
+_T25R1004_003_do:
+	closemsg
+	reset_mon_evs VAR_SPECIAL_x8004
+	npc_msg msg_0595_T25R1004_00008
+	wait_button_or_walk_away
+	closemsg
+	releaseall
+	end
+
+_T25R1004_003_no:
+	npc_msg msg_0595_T25R1004_00009
 	wait_button_or_walk_away
 	closemsg
 	releaseall

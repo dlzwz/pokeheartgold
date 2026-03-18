@@ -5445,3 +5445,17 @@ BOOL ScrCmd_837(ScriptContext *ctx) {
     }
     return FALSE;
 }
+
+BOOL ScrCmd_ResetMonEvs(ScriptContext *ctx) {
+    u16 partyIdx = ScriptGetVar(ctx);
+    Pokemon *mon = Party_GetMonByIndex(SaveArray_Party_Get(ctx->fieldSystem->saveData), partyIdx);
+    u8 zero = 0;
+    SetMonData(mon, MON_DATA_HP_EV,    &zero);
+    SetMonData(mon, MON_DATA_ATK_EV,   &zero);
+    SetMonData(mon, MON_DATA_DEF_EV,   &zero);
+    SetMonData(mon, MON_DATA_SPEED_EV, &zero);
+    SetMonData(mon, MON_DATA_SPATK_EV, &zero);
+    SetMonData(mon, MON_DATA_SPDEF_EV, &zero);
+    CalcMonStats(mon);
+    return FALSE;
+}
