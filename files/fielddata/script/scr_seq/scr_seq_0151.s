@@ -97,7 +97,6 @@ scr_seq_0151_005:
 	end
 
 _0114:
-	goto_if_set FLAG_DAILY_DID_BUG_CONTEST, _02A6
 	get_weekday VAR_TEMP_x4000
 	compare VAR_TEMP_x4000, 2
 	goto_if_ne _0139
@@ -363,7 +362,6 @@ _04B5:
 	play_bgm SEQ_GS_D_KOUEN
 	scrcmd_103
 	call _04FD
-	setflag FLAG_DAILY_DID_BUG_CONTEST
 	clearflag FLAG_BUG_CONTEST_ACTIVE
 	clearflag FLAG_UNK_24E
 	clearflag FLAG_BUG_CONTEST_OTHER_POKES_HELD
