@@ -50,7 +50,44 @@ _007D:
 	get_party_count VAR_SPECIAL_RESULT
 	compare VAR_SPECIAL_RESULT, 6
 	goto_if_eq _0106
-	give_togepi_egg
+
+_togepi_preview_loop:
+	togepi_egg_generate VAR_SPECIAL_x8005, VAR_SPECIAL_x8006
+	buffer_nature_name 2, VAR_SPECIAL_x8005
+	npc_msg msg_0557_T22FS0101_00011
+	compare VAR_SPECIAL_x8006, 0
+	goto_if_eq _togepi_tier_decent
+	compare VAR_SPECIAL_x8006, 1
+	goto_if_eq _togepi_tier_above_avg
+	compare VAR_SPECIAL_x8006, 2
+	goto_if_eq _togepi_tier_superior
+	npc_msg msg_0557_T22FS0101_00015
+	goto _togepi_yesno
+
+_togepi_tier_decent:
+	npc_msg msg_0557_T22FS0101_00012
+	goto _togepi_yesno
+
+_togepi_tier_above_avg:
+	npc_msg msg_0557_T22FS0101_00013
+	goto _togepi_yesno
+
+_togepi_tier_superior:
+	npc_msg msg_0557_T22FS0101_00014
+
+_togepi_yesno:
+	npc_msg msg_0557_T22FS0101_00016
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 0
+	goto_if_eq _togepi_accept
+	npc_msg msg_0557_T22FS0101_00017
+	goto _togepi_preview_loop
+
+_togepi_accept:
+	save_togepi_personality
+	gift_egg_commit
 	setflag FLAG_GOT_EGG_FROM_ELMS_ASSISTANT
 	buffer_players_name 0
 	npc_msg msg_0557_T22FS0101_00004

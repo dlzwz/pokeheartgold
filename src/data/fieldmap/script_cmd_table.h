@@ -856,6 +856,8 @@ BOOL ScrCmd_StartSelfTrade(ScriptContext *ctx);
 BOOL ScrCmd_ResetMonEvs(ScriptContext *ctx);
 BOOL ScrCmd_PrimoEggGenerate(ScriptContext *ctx);
 BOOL ScrCmd_GiftEggCommit(ScriptContext *ctx);
+BOOL ScrCmd_TogepiEggGenerate(ScriptContext *ctx);
+BOOL ScrCmd_SaveTogepiPersonalityData(ScriptContext *ctx);
 
 const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_Nop,
@@ -1715,6 +1717,8 @@ const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_ResetMonEvs,
     ScrCmd_PrimoEggGenerate,
     ScrCmd_GiftEggCommit,
+    ScrCmd_TogepiEggGenerate,
+    ScrCmd_SaveTogepiPersonalityData,
 };
 const u32 sNumScriptCmds = NELEMS(gScriptCmdTable);
 

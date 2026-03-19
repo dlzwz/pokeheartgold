@@ -4789,6 +4789,16 @@
 	.short 856
 	.endm
 
+	.macro togepi_egg_generate nature_out, iv_tier_out
+	.short 857
+	.short \nature_out
+	.short \iv_tier_out
+	.endm
+
+	.macro save_togepi_personality
+	.short 858
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script
