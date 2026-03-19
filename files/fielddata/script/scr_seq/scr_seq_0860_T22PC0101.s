@@ -72,35 +72,81 @@ _011D:
 	get_party_count VAR_SPECIAL_RESULT
 	compare VAR_SPECIAL_RESULT, 6
 	goto_if_eq _0207
-	setflag FLAG_GOT_MAREEP_EGG_FROM_PRIMO
-	npc_msg msg_0559_T22PC0101_00018
-	buffer_players_name 0
-	buffer_species_name 1, SPECIES_MAREEP, 0, 0
-	give_egg SPECIES_MAREEP, MAPLOC(METLOC_PRIMO)
-	goto _01CB
+	setvar VAR_SPECIAL_x8004, SPECIES_MAREEP
+	goto _primo_preview_intro
 
 _0157:
 	goto_if_set FLAG_GOT_WOOPER_EGG_FROM_PRIMO, _0212
 	get_party_count VAR_SPECIAL_RESULT
 	compare VAR_SPECIAL_RESULT, 6
 	goto_if_eq _0207
-	setflag FLAG_GOT_WOOPER_EGG_FROM_PRIMO
-	npc_msg msg_0559_T22PC0101_00018
-	buffer_players_name 0
-	buffer_species_name 1, SPECIES_WOOPER, 0, 0
-	give_egg SPECIES_WOOPER, MAPLOC(METLOC_PRIMO)
-	goto _01CB
+	setvar VAR_SPECIAL_x8004, SPECIES_WOOPER
+	goto _primo_preview_intro
 
 _0191:
 	goto_if_set FLAG_GOT_SLUGMA_EGG_FROM_PRIMO, _0212
 	get_party_count VAR_SPECIAL_RESULT
 	compare VAR_SPECIAL_RESULT, 6
 	goto_if_eq _0207
+	setvar VAR_SPECIAL_x8004, SPECIES_SLUGMA
+
+_primo_preview_intro:
+	npc_msg msg_0559_T22PC0101_00027
+
+_primo_preview_loop:
+	primo_egg_generate VAR_SPECIAL_x8004, MAPLOC(METLOC_PRIMO), VAR_SPECIAL_x8005, VAR_SPECIAL_x8006
+	buffer_species_name 1, VAR_SPECIAL_x8004, 0, 0
+	buffer_nature_name 2, VAR_SPECIAL_x8005
+	npc_msg msg_0559_T22PC0101_00028
+	compare VAR_SPECIAL_x8006, 0
+	goto_if_eq _primo_tier_decent
+	compare VAR_SPECIAL_x8006, 1
+	goto_if_eq _primo_tier_above_avg
+	compare VAR_SPECIAL_x8006, 2
+	goto_if_eq _primo_tier_superior
+	npc_msg msg_0559_T22PC0101_00032
+	goto _primo_yesno
+
+_primo_tier_decent:
+	npc_msg msg_0559_T22PC0101_00029
+	goto _primo_yesno
+
+_primo_tier_above_avg:
+	npc_msg msg_0559_T22PC0101_00030
+	goto _primo_yesno
+
+_primo_tier_superior:
+	npc_msg msg_0559_T22PC0101_00031
+
+_primo_yesno:
+	npc_msg msg_0559_T22PC0101_00033
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 0
+	goto_if_eq _primo_accept
+	npc_msg msg_0559_T22PC0101_00034
+	goto _primo_preview_loop
+
+_primo_accept:
+	compare VAR_SPECIAL_x8004, SPECIES_MAREEP
+	goto_if_eq _primo_flag_mareep
+	compare VAR_SPECIAL_x8004, SPECIES_WOOPER
+	goto_if_eq _primo_flag_wooper
 	setflag FLAG_GOT_SLUGMA_EGG_FROM_PRIMO
-	npc_msg msg_0559_T22PC0101_00018
+	goto _primo_give
+
+_primo_flag_mareep:
+	setflag FLAG_GOT_MAREEP_EGG_FROM_PRIMO
+	goto _primo_give
+
+_primo_flag_wooper:
+	setflag FLAG_GOT_WOOPER_EGG_FROM_PRIMO
+
+_primo_give:
 	buffer_players_name 0
-	buffer_species_name 1, SPECIES_SLUGMA, 0, 0
-	give_egg SPECIES_SLUGMA, MAPLOC(METLOC_PRIMO)
+	buffer_species_name 1, VAR_SPECIAL_x8004, 0, 0
+	gift_egg_commit
 	goto _01CB
 
 _01CB:

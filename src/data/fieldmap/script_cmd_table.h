@@ -854,6 +854,8 @@ BOOL ScrCmd_Capitalize(ScriptContext *ctx);
 BOOL ScrCmd_BufferDeptStoreFloorNo(ScriptContext *ctx);
 BOOL ScrCmd_StartSelfTrade(ScriptContext *ctx);
 BOOL ScrCmd_ResetMonEvs(ScriptContext *ctx);
+BOOL ScrCmd_PrimoEggGenerate(ScriptContext *ctx);
+BOOL ScrCmd_GiftEggCommit(ScriptContext *ctx);
 
 const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_Nop,
@@ -1711,6 +1713,8 @@ const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_BufferDeptStoreFloorNo,
     ScrCmd_StartSelfTrade,
     ScrCmd_ResetMonEvs,
+    ScrCmd_PrimoEggGenerate,
+    ScrCmd_GiftEggCommit,
 };
 const u32 sNumScriptCmds = NELEMS(gScriptCmdTable);
 

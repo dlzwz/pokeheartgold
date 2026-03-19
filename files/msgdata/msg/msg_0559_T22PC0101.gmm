@@ -117,4 +117,36 @@
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">Hello! You’ve been mistaken for\n{STRVAR_1 14, 0, 0}, haven’t you?\rBut I think you can also pass for\na different kind of Trainer.\rSo, how about telling me what kind of\nTrainer you like?\r</language>
 	</row>
+	<row id="msg_0559_T22PC0101_00027" index="27">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Primo: ...!\rYou are no ordinary fan, knowing such\na thing!\rYou are a Trainer, right?\nI can swing you an Egg...\rLet’s take a look.\r</language>
+	</row>
+	<row id="msg_0559_T22PC0101_00028" index="28">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Primo: This one looks like a\n{STRVAR_1 0, 2, 0} {STRVAR_1 0, 1, 0}.\r</language>
+	</row>
+	<row id="msg_0559_T22PC0101_00029" index="29">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Overall, I’d say its potential\nis decent.\r</language>
+	</row>
+	<row id="msg_0559_T22PC0101_00030" index="30">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Overall, I’d say its potential\nis above-average.\r</language>
+	</row>
+	<row id="msg_0559_T22PC0101_00031" index="31">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Overall, I’d say its potential is\nrelatively superior.\r</language>
+	</row>
+	<row id="msg_0559_T22PC0101_00032" index="32">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Overall, I’d say its potential\nis outstanding.\r</language>
+	</row>
+	<row id="msg_0559_T22PC0101_00033" index="33">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">What do you think?\nWant this Egg? {YESNO 0}</language>
+	</row>
+	<row id="msg_0559_T22PC0101_00034" index="34">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Primo: No? Alright, give me a\nsecond...\rHow about this one?\r</language>
+	</row>
 </body>
