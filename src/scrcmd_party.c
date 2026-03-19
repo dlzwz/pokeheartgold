@@ -14,6 +14,7 @@
 #include "save_arrays.h"
 #include "scrcmd.h"
 #include "script_pokemon_util.h"
+#include "save_misc_data.h"
 #include "unk_0205BB1C.h"
 
 FS_EXTERN_OVERLAY(npc_trade);
@@ -176,6 +177,85 @@ BOOL ScrCmd_GiftEggCommit(ScriptContext *ctx) {
     Party_AddMon(party, sGiftTempEgg);
     Heap_Free(sGiftTempEgg);
     sGiftTempEgg = NULL;
+
+    return FALSE;
+}
+
+// togepi_egg_generate <VAR_nature_out> <VAR_iv_tier_out>
+//
+// Generates a candidate Togepi gift egg using the same path as
+// ScrCmd_GiveTogepiEgg (including the Extrasensory move), without adding
+// it to the party.  Stores the resulting nature index in VAR_nature_out and
+// an IV-total appraisal tier (0 = decent, 1 = above-average,
+// 2 = relatively superior, 3 = outstanding) in VAR_iv_tier_out.
+// Any previously buffered temp egg is discarded first.
+BOOL ScrCmd_TogepiEggGenerate(ScriptContext *ctx) {
+    s32 i;
+    u8 pp;
+    u16 moveData;
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+
+    u16 *natureOut = ScriptGetVarPointer(ctx);
+    u16 *ivTierOut = ScriptGetVarPointer(ctx);
+
+    if (sGiftTempEgg != NULL) {
+        Heap_Free(sGiftTempEgg);
+        sGiftTempEgg = NULL;
+    }
+
+    PlayerProfile *profile = Save_PlayerData_GetProfile(fieldSystem->saveData);
+    sGiftTempEgg = AllocMonZeroed(HEAP_ID_FIELD2);
+    ZeroMonData(sGiftTempEgg);
+    SetEggStats(sGiftTempEgg, SPECIES_TOGEPI, 1, profile, 3,
+                sub_02017FE4(MAPSECTYPE_GIFT, MAPLOC(METLOC_MR_POKEMON)));
+
+    // Add Extrasensory to the first empty move slot, or overwrite slot 4.
+    for (i = 0; i < MAX_MON_MOVES; i++) {
+        if (GetMonData(sGiftTempEgg, MON_DATA_MOVE1 + i, NULL) == MOVE_NONE) {
+            break;
+        }
+    }
+    if (i == MAX_MON_MOVES) {
+        i = MAX_MON_MOVES - 1;
+    }
+    moveData = MOVE_EXTRASENSORY;
+    SetMonData(sGiftTempEgg, MON_DATA_MOVE1 + i, &moveData);
+    pp = GetMonData(sGiftTempEgg, MON_DATA_MOVE1_MAX_PP + i, NULL);
+    SetMonData(sGiftTempEgg, MON_DATA_MOVE1_PP + i, &pp);
+
+    *natureOut = GetMonNature(sGiftTempEgg);
+
+    u32 ivTotal = GetMonData(sGiftTempEgg, MON_DATA_HP_IV,    NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_ATK_IV,   NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_DEF_IV,   NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_SPEED_IV, NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_SPATK_IV, NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_SPDEF_IV, NULL);
+
+    if (ivTotal <= 90)       *ivTierOut = 0;
+    else if (ivTotal <= 120) *ivTierOut = 1;
+    else if (ivTotal <= 150) *ivTierOut = 2;
+    else                     *ivTierOut = 3;
+
+    return FALSE;
+}
+
+// save_togepi_personality
+//
+// Records the buffered egg's personality value and gender in the save-misc
+// block required for the Spiky-eared Pichu event.  Must be called BEFORE
+// gift_egg_commit while sGiftTempEgg is still valid.
+BOOL ScrCmd_SaveTogepiPersonalityData(ScriptContext *ctx) {
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+
+    if (sGiftTempEgg == NULL) {
+        return FALSE;
+    }
+
+    u32 personality = GetMonData(sGiftTempEgg, MON_DATA_PERSONALITY, NULL);
+    u8  gender      = GetMonData(sGiftTempEgg, MON_DATA_GENDER,      NULL);
+    SaveMisc_SetTogepiPersonalityGender(Save_Misc_Get(fieldSystem->saveData),
+                                        personality, gender);
 
     return FALSE;
 }

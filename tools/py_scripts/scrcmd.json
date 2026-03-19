@@ -5358,6 +5358,14 @@
     {
       "name": "gift_egg_commit",
       "args": []
+    },
+    {
+      "name": "togepi_egg_generate",
+      "args": ["var", "var"]
+    },
+    {
+      "name": "save_togepi_personality",
+      "args": []
     }
   ],
   "argtypes": {

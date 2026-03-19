@@ -44,4 +44,32 @@
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">{STRVAR_1 3, 0, 0},\nwill you take this Egg? {YESNO 0}</language>
 	</row>
+	<row id="msg_0557_T22FS0101_00011" index="11">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Hmm... It looks like it would be\n{STRVAR_1 0, 2, 0} natured.\r</language>
+	</row>
+	<row id="msg_0557_T22FS0101_00012" index="12">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Its potential seems decent.\r</language>
+	</row>
+	<row id="msg_0557_T22FS0101_00013" index="13">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Its potential seems above-average.\r</language>
+	</row>
+	<row id="msg_0557_T22FS0101_00014" index="14">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Its potential seems relatively superior.\r</language>
+	</row>
+	<row id="msg_0557_T22FS0101_00015" index="15">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Its potential seems outstanding!\r</language>
+	</row>
+	<row id="msg_0557_T22FS0101_00016" index="16">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">What do you think?\nWill you take this Egg? {YESNO 0}</language>
+	</row>
+	<row id="msg_0557_T22FS0101_00017" index="17">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Hmm, wait... I may have\nmisread it. Let me look again.\r</language>
+	</row>
 </body>
