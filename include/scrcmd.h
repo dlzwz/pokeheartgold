@@ -164,6 +164,8 @@ BOOL ScrCmd_GiveRandomSeal(ScriptContext *ctx);
 BOOL ScrCmd_136(ScriptContext *ctx);
 BOOL ScrCmd_GiveMon(ScriptContext *ctx);
 BOOL ScrCmd_GiveEgg(ScriptContext *ctx);
+BOOL ScrCmd_PrimoEggGenerate(ScriptContext *ctx);
+BOOL ScrCmd_GiftEggCommit(ScriptContext *ctx);
 BOOL ScrCmd_SetMonMove(ScriptContext *ctx);
 BOOL ScrCmd_MonHasMove(ScriptContext *ctx);
 BOOL ScrCmd_GetPartySlotWithMove(ScriptContext *ctx);

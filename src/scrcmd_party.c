@@ -100,6 +100,86 @@ BOOL ScrCmd_GiveEgg(ScriptContext *ctx) {
     return FALSE;
 }
 
+// Temporary egg storage for the Primo preview/accept/reject loop.
+// Allocated by ScrCmd_PrimoEggGenerate; committed or discarded by
+// ScrCmd_GiftEggCommit.  Lives on HEAP_ID_FIELD2 between the two calls.
+static Pokemon *sGiftTempEgg = NULL;
+
+// primo_egg_generate <species> <maploc_offset> <VAR_nature_out> <VAR_iv_tier_out>
+//
+// Generates a candidate Primo gift egg using exactly the same path as the
+// vanilla give_egg command, without adding it to the party.  Stores the
+// resulting nature index in VAR_nature_out and an IV-total appraisal tier
+// (0 = decent, 1 = above-average, 2 = relatively superior, 3 = outstanding)
+// in VAR_iv_tier_out so the script can show them to the player before asking
+// whether to accept.  Any previously buffered temp egg is discarded first.
+BOOL ScrCmd_PrimoEggGenerate(ScriptContext *ctx) {
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+
+    u16 species = ScriptGetVar(ctx);
+    u16 offset  = ScriptGetVar(ctx);
+    u16 *natureOut = ScriptGetVarPointer(ctx);
+    u16 *ivTierOut = ScriptGetVarPointer(ctx);
+
+    // Discard any previous candidate that was not committed.
+    if (sGiftTempEgg != NULL) {
+        Heap_Free(sGiftTempEgg);
+        sGiftTempEgg = NULL;
+    }
+
+    // Generate the egg the same way ScrCmd_GiveEgg does, but do not add it
+    // to the party yet.
+    PlayerProfile *profile = Save_PlayerData_GetProfile(fieldSystem->saveData);
+    sGiftTempEgg = AllocMonZeroed(HEAP_ID_FIELD2);
+    ZeroMonData(sGiftTempEgg);
+    int val = sub_02017FE4(MAPSECTYPE_GIFT, offset);
+    SetEggStats(sGiftTempEgg, species, 1, profile, 3, val);
+
+    // Nature (PID % 25).
+    *natureOut = GetMonNature(sGiftTempEgg);
+
+    // IV total appraisal tier.
+    u32 ivTotal = GetMonData(sGiftTempEgg, MON_DATA_HP_IV,    NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_ATK_IV,   NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_DEF_IV,   NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_SPEED_IV, NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_SPATK_IV, NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_SPDEF_IV, NULL);
+
+    if (ivTotal <= 90) {
+        *ivTierOut = 0;  // decent
+    } else if (ivTotal <= 120) {
+        *ivTierOut = 1;  // above-average
+    } else if (ivTotal <= 150) {
+        *ivTierOut = 2;  // relatively superior
+    } else {
+        *ivTierOut = 3;  // outstanding
+    }
+
+    return FALSE;
+}
+
+// gift_egg_commit
+//
+// Adds the candidate egg that was buffered by the most recent
+// ScrCmd_PrimoEggGenerate call to the player's party, then frees it.
+// The script must have already verified that the party is not full before
+// entering the preview loop.
+BOOL ScrCmd_GiftEggCommit(ScriptContext *ctx) {
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+
+    if (sGiftTempEgg == NULL) {
+        return FALSE;
+    }
+
+    Party *party = SaveArray_Party_Get(fieldSystem->saveData);
+    Party_AddMon(party, sGiftTempEgg);
+    Heap_Free(sGiftTempEgg);
+    sGiftTempEgg = NULL;
+
+    return FALSE;
+}
+
 BOOL ScrCmd_SetMonMove(ScriptContext *ctx) {
     u16 monSlot = ScriptGetVar(ctx);
     u16 moveSlot = ScriptGetVar(ctx);

@@ -4777,6 +4777,18 @@
 	.short \party_pos
 	.endm
 
+	.macro primo_egg_generate species, offset, nature_out, iv_tier_out
+	.short 855
+	.short \species
+	.short \offset
+	.short \nature_out
+	.short \iv_tier_out
+	.endm
+
+	.macro gift_egg_commit
+	.short 856
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script

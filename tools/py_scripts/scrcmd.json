@@ -5333,6 +5333,31 @@
         1,
         1
       ]
+    },
+    {
+      "name": "start_self_trade",
+      "args": [
+        "var"
+      ]
+    },
+    {
+      "name": "reset_mon_evs",
+      "args": [
+        "var"
+      ]
+    },
+    {
+      "name": "primo_egg_generate",
+      "args": [
+        "var",
+        "var",
+        "var",
+        "var"
+      ]
+    },
+    {
+      "name": "gift_egg_commit",
+      "args": []
     }
   ],
   "argtypes": {
