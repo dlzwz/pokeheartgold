@@ -381,6 +381,8 @@
 .public BtlCmd_222
 .public BtlCmd_223
 .public BtlCmd_EndScript
+.public BtlCmd_PrintWildAppearedMessage
+.public BtlCmd_PrintWildIVAppraisalMessage
 .public BattleScriptReadWord
 .public Task_GetExp
 .public Task_GetPokemon

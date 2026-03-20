@@ -62,5 +62,6 @@
 #define TAG_TRCLASS_TRNAME_NICKNAME_TRNAME                  58
 #define TAG_TRCLASS_TRNAME_TRCLASS_TRNAME                   59
 #define TAG_TRCLASS_TRNAME_NICKNAME_TRCLASS_TRNAME_NICKNAME 60
+#define TAG_NATURE_NICKNAME                                 61
 
 #endif

@@ -91,6 +91,7 @@ void BufferSafariZoneAreaName(MessageFormat *messageFormat, u32 fieldno, u32 are
 void BufferPokewalkerCourseName(MessageFormat *messageFormat, u32 fieldno, u32 courseId);
 void BufferMonthNameAbbr(MessageFormat *messageFormat, u32 fieldno, u32 month);
 void MessageFormat_UpperFirstChar(MessageFormat *messageFormat, u32 fieldno);
+void MessageFormat_LowerFirstChar(MessageFormat *messageFormat, u32 fieldno);
 void BufferDeptStoreFloorNo(MessageFormat *messageFormat, u32 fieldno, u32 floor);
 void MessageFormat_ResetBuffers(MessageFormat *messageFormat);
 

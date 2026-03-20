@@ -17,8 +17,11 @@ _000:
     CompareVarToValue OPCODE_FLAG_SET, BSCRIPT_VAR_BATTLE_SYS_STATUS, BATTLE_SPECIAL_FIRST_RIVAL, _055
     CompareVarToValue OPCODE_FLAG_SET, BSCRIPT_VAR_BATTLE_SYS_STATUS, BATTLE_SPECIAL_HONEY_TREE, _061
     CompareVarToValue OPCODE_FLAG_SET, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_DOUBLES, _079
-    // A wild {0} appeared!
-    PrintGlobalMessage msg_0197_00965, TAG_NICKNAME, BATTLER_CATEGORY_ENEMY
+    // A wild [nature] {0} appeared!
+    PrintWildAppearedMessage BATTLER_CATEGORY_ENEMY
+    Wait
+    // It looks relatively superior/outstanding. (silent for lower tiers)
+    PrintWildIVAppraisalMessage BATTLER_CATEGORY_ENEMY
     GoTo _084
 
 _055:

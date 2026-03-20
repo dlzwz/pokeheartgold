@@ -5120,4 +5120,16 @@
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">The rest of the party\ngained EXP!\r</language>
 	</row>
+	<row id="msg_0197_01277" index="1277">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">A wild {STRVAR_1 1, 0, 0} {STRVAR_1 1, 1, 0} appeared!\r</language>
+	</row>
+	<row id="msg_0197_01278" index="1278">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It looks relatively superior.\r</language>
+	</row>
+	<row id="msg_0197_01279" index="1279">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It looks outstanding.\r</language>
+	</row>
 </body>

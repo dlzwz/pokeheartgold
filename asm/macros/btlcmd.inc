@@ -1245,4 +1245,17 @@
     .long 224
     .endm
 
+    // Print "A wild [nature] [POKEMON] appeared!" for normal wild encounters only.
+    .macro PrintWildAppearedMessage battler
+    .long 225
+    .long \battler
+    .endm
+
+    // Print "It looks [tier]." only for relatively superior or outstanding IV totals.
+    // Silent for decent and above-average so routine encounters are not slowed down.
+    .macro PrintWildIVAppraisalMessage battler
+    .long 226
+    .long \battler
+    .endm
+
     .endif // ASM_BATTLE_SCRIPT_INC

@@ -2,6 +2,8 @@
 
 #include "global.h"
 
+#include "message_format.h"
+
 #include "constants/game_stats.h"
 #include "constants/message_tags.h"
 #include "constants/sndseq.h"
@@ -42,6 +44,7 @@ static void BattleMessage_BufferFlavorPreference(BattleSystem *battleSystem, int
 static void BattleMessage_BufferTrainerClass(BattleSystem *battleSystem, int bufferIndex, int param);
 static void BattleMessage_BufferTrainerName(BattleSystem *battleSystem, int bufferIndex, int param);
 static void BattleMessage_BufferBoxName(BattleSystem *battleSystem, int bufferIndex, int param);
+static void BattleMessage_BufferNature(BattleSystem *battleSystem, int bufferIndex, int param);
 static void BattleMessage_ExpandPlaceholders(BattleSystem *battleSystem, MsgData *data, BattleMessage *msg);
 static BOOL ov12_0223CF14(struct TextPrinterTemplate *template, u16 glyphId);
 
@@ -1853,6 +1856,11 @@ static void BattleSystem_BufferMessage(BattleSystem *battleSystem, BattleMessage
         BattleMessage_BufferTrainerName(battleSystem, 4, msg->param[4]);
         BattleMessage_BufferNickname(battleSystem, 5, msg->param[5]);
         break;
+    case TAG_NATURE_NICKNAME:
+        // param[0] = nature index (0-24), param[1] = encoded battler+slot for nickname
+        BattleMessage_BufferNature(battleSystem, 0, msg->param[0]);
+        BattleMessage_BufferNickname(battleSystem, 1, msg->param[1]);
+        break;
     default:
         GF_ASSERT(FALSE);
     }
@@ -1924,6 +1932,11 @@ static void BattleMessage_BufferTrainerName(BattleSystem *battleSystem, int buff
 
 static void BattleMessage_BufferBoxName(BattleSystem *battleSystem, int bufferIndex, int param) {
     BufferPCBoxName(battleSystem->msgFormat, bufferIndex, battleSystem->storage, param);
+}
+
+static void BattleMessage_BufferNature(BattleSystem *battleSystem, int bufferIndex, int param) {
+    BufferNatureName(battleSystem->msgFormat, bufferIndex, param);
+    MessageFormat_LowerFirstChar(battleSystem->msgFormat, bufferIndex);
 }
 
 static void BattleMessage_ExpandPlaceholders(BattleSystem *battleSystem, MsgData *data, BattleMessage *msg) {
