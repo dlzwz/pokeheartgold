@@ -168,6 +168,8 @@ BOOL ScrCmd_PrimoEggGenerate(ScriptContext *ctx);
 BOOL ScrCmd_GiftEggCommit(ScriptContext *ctx);
 BOOL ScrCmd_TogepiEggGenerate(ScriptContext *ctx);
 BOOL ScrCmd_SaveTogepiPersonalityData(ScriptContext *ctx);
+BOOL ScrCmd_EeveeGenerate(ScriptContext *ctx);
+BOOL ScrCmd_EeveeCommit(ScriptContext *ctx);
 BOOL ScrCmd_SetMonMove(ScriptContext *ctx);
 BOOL ScrCmd_MonHasMove(ScriptContext *ctx);
 BOOL ScrCmd_GetPartySlotWithMove(ScriptContext *ctx);

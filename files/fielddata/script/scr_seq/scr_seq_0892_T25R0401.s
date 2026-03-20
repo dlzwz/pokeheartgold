@@ -30,8 +30,44 @@ _004B:
 	get_party_count VAR_SPECIAL_x8005
 	compare VAR_SPECIAL_x8005, 6
 	goto_if_eq _00DE
+
+_eevee_preview_loop:
+	eevee_generate VAR_SPECIAL_x8000, VAR_SPECIAL_x8001
+	buffer_nature_name 2, VAR_SPECIAL_x8000
+	npc_msg msg_0586_T25R0401_00016
+	compare VAR_SPECIAL_x8001, 0
+	goto_if_eq _eevee_tier_decent
+	compare VAR_SPECIAL_x8001, 1
+	goto_if_eq _eevee_tier_above_avg
+	compare VAR_SPECIAL_x8001, 2
+	goto_if_eq _eevee_tier_superior
+	npc_msg msg_0586_T25R0401_00020
+	goto _eevee_yesno
+
+_eevee_tier_decent:
+	npc_msg msg_0586_T25R0401_00017
+	goto _eevee_yesno
+
+_eevee_tier_above_avg:
+	npc_msg msg_0586_T25R0401_00018
+	goto _eevee_yesno
+
+_eevee_tier_superior:
+	npc_msg msg_0586_T25R0401_00019
+
+_eevee_yesno:
+	npc_msg msg_0586_T25R0401_00021
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 0
+	goto_if_eq _eevee_accept
+	npc_msg msg_0586_T25R0401_00022
+	goto _eevee_preview_loop
+
+_eevee_accept:
 	npc_msg msg_0586_T25R0401_00001
-	give_mon SPECIES_EEVEE, 5, 0, 0, 0, VAR_SPECIAL_RESULT
+	eevee_commit
 	setflag FLAG_GOT_EEVEE_FROM_BILL
 	buffer_players_name 0
 	npc_msg msg_0586_T25R0401_00002
