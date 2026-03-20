@@ -4785,6 +4785,8 @@ sBattleScriptCommandTable: ; 0x0226C6C8
 	.word BtlCmd_222
 	.word BtlCmd_223
 	.word BtlCmd_EndScript
+	.word BtlCmd_PrintWildAppearedMessage ;225
+	.word BtlCmd_PrintWildIVAppraisalMessage ;226
 
 .public sPickupWeightTable
 

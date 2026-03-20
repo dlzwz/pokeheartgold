@@ -28,6 +28,7 @@ void CopyU16ArrayToStringN(String *dest, const u16 *src, u32 n);
 u16 *String_cstr(String *string);
 void String16_FormatInteger(String *str, int num, u32 ndigits, PrintingMode strConvMode, BOOL whichCharset);
 void String_UpperCharN(String *str, int n);
+void String_LowerCharN(String *str, int n);
 void String_Cat_HandleTrainerName(String *dest, String *src);
 void String16_FormatUnsignedLongLong(String *str, u64 num, u32 ndigits, PrintingMode strConvMode, BOOL whichCharset);
 s64 String_atoi(String *str, BOOL *flag);

@@ -639,6 +639,10 @@ void MessageFormat_UpperFirstChar(MessageFormat *msgFmt, u32 fieldno) {
     String_UpperCharN(msgFmt->fields[fieldno].msg, 0);
 }
 
+void MessageFormat_LowerFirstChar(MessageFormat *msgFmt, u32 fieldno) {
+    String_LowerCharN(msgFmt->fields[fieldno].msg, 0);
+}
+
 void BufferDeptStoreFloorNo(MessageFormat *msgFmt, u32 fieldno, u32 floor) {
     s32 msgno;
     MsgData *msgData = NewMsgDataFromNarc(MSGDATA_LOAD_LAZY, NARC_msgdata_msg, NARC_msg_msg_0191_bin, msgFmt->heapID);

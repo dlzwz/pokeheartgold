@@ -6435,3 +6435,47 @@ static void Task_GetExp(SysTask *task, void *inData) {
         break;
     }
 }
+
+// Emits "It looks [tier]." only for relatively superior (IV total 121-150) or outstanding
+// (IV total 151+) wild Pokémon.  Stays silent for decent/above-average so routine encounters
+// are not slowed down.
+BOOL BtlCmd_PrintWildIVAppraisalMessage(BattleSystem *battleSystem, BattleContext *ctx) {
+    BattleScriptIncrementPointer(ctx, 1);
+    u32 side = BattleScriptReadWord(ctx);
+    u8 battlerId = GetBattlerIDBySide(battleSystem, ctx, side);
+
+    BattleMon *mon = &ctx->battleMons[battlerId];
+    u32 ivTotal = mon->hpIV + mon->atkIV + mon->defIV
+                + mon->speedIV + mon->spAtkIV + mon->spDefIV;
+
+    if (ivTotal <= 120) {
+        return FALSE;  // decent or above-average: stay silent
+    }
+
+    BattleMessage msg = {0};
+    msg.id = (ivTotal <= 150) ? msg_0197_01278   // "It looks relatively superior."
+                               : msg_0197_01279;  // "It looks outstanding."
+    msg.tag = TAG_NONE | 128;
+
+    BattleController_EmitPrintMessage(battleSystem, ctx, &msg);
+    return FALSE;
+}
+
+// Emits "A wild [nature] [POKEMON] appeared!" for normal wild encounters.
+// Uses TAG_NATURE_NICKNAME: param[0] = nature index (0-24, lowercased by the buffer function),
+// param[1] = encoded battler+slot for the nickname.
+BOOL BtlCmd_PrintWildAppearedMessage(BattleSystem *battleSystem, BattleContext *ctx) {
+    BattleScriptIncrementPointer(ctx, 1);
+    u32 side = BattleScriptReadWord(ctx);
+    u8 battlerId = GetBattlerIDBySide(battleSystem, ctx, side);
+
+    BattleMessage msg = {0};
+    msg.id = msg_0197_01277;  // "A wild [nature] [POKEMON] appeared!"
+    msg.tag = TAG_NATURE_NICKNAME | 128;  // 128 = global; skip side adjustment
+    msg.param[0] = ctx->battleMons[battlerId].personality % 25;
+    msg.param[1] = CreateNicknameTag(ctx, battlerId);
+
+    BattleController_EmitPrintMessage(battleSystem, ctx, &msg);
+    return FALSE;
+}
+

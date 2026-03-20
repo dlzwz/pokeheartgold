@@ -438,3 +438,13 @@ void String_UpperCharN(String *str, int n) {
         }
     }
 }
+
+void String_LowerCharN(String *str, int n) {
+    ASSERT_STRING(str);
+
+    if (str->size > n) {
+        if (str->data[n] >= CHAR_A && str->data[n] <= CHAR_Z) {
+            str->data[n] += CHAR_a - CHAR_A;
+        }
+    }
+}
