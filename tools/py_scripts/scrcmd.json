@@ -5382,6 +5382,14 @@
     {
       "name": "sudowoodo_wild_battle",
       "args": []
+    },
+    {
+      "name": "spiky_ear_pichu_generate",
+      "args": ["var"]
+    },
+    {
+      "name": "spiky_ear_pichu_commit",
+      "args": []
     }
   ],
   "argtypes": {

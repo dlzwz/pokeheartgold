@@ -1146,6 +1146,89 @@ BOOL ScrCmd_GiveSpikyEarPichu(ScriptContext *ctx) {
     return FALSE;
 }
 
+static Pokemon *sSpikyEarPichuBuf = NULL;
+
+static void SpikyEarPichu_GenerateIntoBuffer(ScriptContext *ctx) {
+    s32 i;
+    u8 form;
+    u8 maxPP;
+    u16 heldItem;
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+    PlayerProfile *profile = Save_PlayerData_GetProfile(fieldSystem->saveData);
+
+    if (sSpikyEarPichuBuf != NULL) {
+        Heap_Free(sSpikyEarPichuBuf);
+        sSpikyEarPichuBuf = NULL;
+    }
+
+    sSpikyEarPichuBuf = AllocMonZeroed(HEAP_ID_FIELD2);
+    ZeroMonData(sSpikyEarPichuBuf);
+
+    u32 trId = PlayerProfile_GetTrainerID(profile);
+    u32 unkA = ChangePersonalityToNatureGenderAndAbility(trId, 0xac, NATURE_NAUGHTY, MON_FEMALE, 0, 0);
+    CreateMon(sSpikyEarPichuBuf, SPECIES_PICHU, 30, 0x20, 1, unkA, 1, trId);
+
+    form = PICHU_SPIKY_EAR;
+    SetMonData(sSpikyEarPichuBuf, MON_DATA_FORM, &form);
+
+    for (i = 0; i < MAX_MON_MOVES; i++) {
+        SetMonData(sSpikyEarPichuBuf, MON_DATA_MOVE1 + i, &sSpikyEarPichuMoveset[i]);
+        maxPP = GetMonData(sSpikyEarPichuBuf, MON_DATA_MOVE1_MAX_PP + i, 0);
+        SetMonData(sSpikyEarPichuBuf, MON_DATA_MOVE1_PP + i, &maxPP);
+    }
+
+    heldItem = ITEM_ZAP_PLATE;
+    SetMonData(sSpikyEarPichuBuf, MON_DATA_HELD_ITEM, &heldItem);
+
+    u32 unkB = sub_02017FE4(MAPSECTYPE_NORMAL, MapHeader_GetMapSec(fieldSystem->location->mapId));
+    sub_020720FC(sSpikyEarPichuBuf, profile, 4, unkB, 0x18, HEAP_ID_FIELD2);
+}
+
+// spiky_ear_pichu_generate iv_tier_out
+//
+// Generates a candidate Spiky-eared Pichu using the exact vanilla routine
+// and buffers it in sSpikyEarPichuBuf.  Stores an IV-total appraisal tier
+// (0–3) in VAR_iv_tier_out.  Any previously buffered candidate is discarded.
+BOOL ScrCmd_SpikyEarPichuGenerate(ScriptContext *ctx) {
+    u16 *ivTierOut = ScriptGetVarPointer(ctx);
+
+    SpikyEarPichu_GenerateIntoBuffer(ctx);
+
+    u32 ivTotal = GetMonData(sSpikyEarPichuBuf, MON_DATA_HP_IV,    NULL)
+                + GetMonData(sSpikyEarPichuBuf, MON_DATA_ATK_IV,   NULL)
+                + GetMonData(sSpikyEarPichuBuf, MON_DATA_DEF_IV,   NULL)
+                + GetMonData(sSpikyEarPichuBuf, MON_DATA_SPEED_IV, NULL)
+                + GetMonData(sSpikyEarPichuBuf, MON_DATA_SPATK_IV, NULL)
+                + GetMonData(sSpikyEarPichuBuf, MON_DATA_SPDEF_IV, NULL);
+
+    if (ivTotal <= 90)       *ivTierOut = 0;
+    else if (ivTotal <= 120) *ivTierOut = 1;
+    else if (ivTotal <= 150) *ivTierOut = 2;
+    else                     *ivTierOut = 3;
+
+    return FALSE;
+}
+
+// spiky_ear_pichu_commit
+//
+// Adds the candidate buffered by ScrCmd_SpikyEarPichuGenerate to the party,
+// updates the Pokédex, then frees the buffer.
+BOOL ScrCmd_SpikyEarPichuCommit(ScriptContext *ctx) {
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+
+    if (sSpikyEarPichuBuf == NULL) {
+        return FALSE;
+    }
+
+    Party *party = SaveArray_Party_Get(fieldSystem->saveData);
+    Party_AddMon(party, sSpikyEarPichuBuf);
+    UpdatePokedexWithReceivedSpecies(fieldSystem->saveData, sSpikyEarPichuBuf);
+    Heap_Free(sSpikyEarPichuBuf);
+    sSpikyEarPichuBuf = NULL;
+
+    return FALSE;
+}
+
 BOOL ScrCmd_PhotoAlbumIsFull(ScriptContext *ctx) {
     FieldSystem *fieldSystem = ctx->fieldSystem;
     u16 *albumIsFull = ScriptGetVarPointer(ctx);

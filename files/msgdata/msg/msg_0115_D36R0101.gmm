@@ -274,4 +274,28 @@
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">It was all so bizarre.\nBut now that we are safely back to our\ftime and Team Rocket’s terrible design\ffell through, we can say...\fall’s well that ends well, right?\r{STRVAR_1 3, 0, 0}, you never cease to\ninspire great adventures!\rIt sure was an exhausting day, though.\nI better get going.\rSee you!\r</language>
 	</row>
+	<row id="msg_0115_D36R0101_00068" index="68">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It seems to be a decent\nlittle Pokémon.\r</language>
+	</row>
+	<row id="msg_0115_D36R0101_00069" index="69">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It seems to be a fine\nlittle Pokémon.\r</language>
+	</row>
+	<row id="msg_0115_D36R0101_00070" index="70">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It seems to be quite a\nremarkable little Pokémon!\r</language>
+	</row>
+	<row id="msg_0115_D36R0101_00071" index="71">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It seems to be an incredible\nlittle Pokémon!!\r</language>
+	</row>
+	<row id="msg_0115_D36R0101_00072" index="72">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Will you take this\nSpiky-eared PICHU? {YESNO 0}</language>
+	</row>
+	<row id="msg_0115_D36R0101_00073" index="73">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">I see...\rLet me have another look at it.\r</language>
+	</row>
 </body>

@@ -1907,7 +1907,34 @@ _1A34:
 	goto_if_ne _1A51
 	callstd std_fade_end_pichu_music
 _1A51:
-	give_spiky_ear_pichu
+	spiky_ear_pichu_generate VAR_SPECIAL_x8000
+	compare VAR_SPECIAL_x8000, 0
+	goto_if_eq _pichu_tier_decent
+	compare VAR_SPECIAL_x8000, 1
+	goto_if_eq _pichu_tier_above_avg
+	compare VAR_SPECIAL_x8000, 2
+	goto_if_eq _pichu_tier_superior
+	npc_msg msg_0115_D36R0101_00071
+	goto _pichu_yesno
+_pichu_tier_decent:
+	npc_msg msg_0115_D36R0101_00068
+	goto _pichu_yesno
+_pichu_tier_above_avg:
+	npc_msg msg_0115_D36R0101_00069
+	goto _pichu_yesno
+_pichu_tier_superior:
+	npc_msg msg_0115_D36R0101_00070
+_pichu_yesno:
+	npc_msg msg_0115_D36R0101_00072
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 0
+	goto_if_eq _pichu_accept
+	npc_msg msg_0115_D36R0101_00073
+	goto _1A51
+_pichu_accept:
+	spiky_ear_pichu_commit
 	hide_person obj_D36R0101_tsure_poke_static_pichu_spiky
 	setvar VAR_UNK_412B, 2
 	play_fanfare SEQ_ME_SHINKAOME
