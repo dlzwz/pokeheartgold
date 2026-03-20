@@ -39,6 +39,15 @@
 #include "unk_02092BE8.h"
 #include "use_item_on_mon.h"
 
+static Pokemon *sPresetWildMon = NULL;
+
+void SetPresetWildMon(Pokemon *mon) {
+    if (sPresetWildMon != NULL) {
+        Heap_Free(sPresetWildMon);
+    }
+    sPresetWildMon = mon;
+}
+
 static BOOL Task_StartBattle(TaskManager *taskManager);
 static void CallTask_StartBattle(TaskManager *taskManager, BattleSetup *setup);
 static Encounter *Encounter_New(BattleSetup *setup, s32 effect, s32 bgm, u32 *winFlag);
@@ -543,6 +552,15 @@ void SetupAndStartWildBattle(TaskManager *taskManager, u16 species, u8 level, u3
     setup = BattleSetup_New(HEAP_ID_FIELD2, BATTLE_TYPE_NONE);
     BattleSetup_InitFromFieldSystem(setup, fieldSystem);
     ov02_02247F30(fieldSystem, species, level, shiny, setup);
+
+    if (sPresetWildMon != NULL) {
+        Pokemon *slot = Party_GetMonByIndex(setup->party[BATTLER_ENEMY], 0);
+        if (slot != NULL) {
+            *slot = *sPresetWildMon;
+        }
+        Heap_Free(sPresetWildMon);
+        sPresetWildMon = NULL;
+    }
 
     if (canFlee) {
         setup->battleSpecial |= 8;

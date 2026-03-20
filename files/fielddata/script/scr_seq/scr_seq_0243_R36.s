@@ -90,6 +90,36 @@ _0124:
 	apply_movement obj_player, _03A4
 _012C:
 	wait_movement
+_sudo_preview_loop:
+	sudowoodo_generate VAR_SPECIAL_x8000, VAR_SPECIAL_x8001
+	buffer_nature_name 2, VAR_SPECIAL_x8000
+	npc_msg msg_0390_R36_00019
+	compare VAR_SPECIAL_x8001, 0
+	goto_if_eq _sudo_tier_decent
+	compare VAR_SPECIAL_x8001, 1
+	goto_if_eq _sudo_tier_above_avg
+	compare VAR_SPECIAL_x8001, 2
+	goto_if_eq _sudo_tier_superior
+	npc_msg msg_0390_R36_00023
+	goto _sudo_yesno
+_sudo_tier_decent:
+	npc_msg msg_0390_R36_00020
+	goto _sudo_yesno
+_sudo_tier_above_avg:
+	npc_msg msg_0390_R36_00021
+	goto _sudo_yesno
+_sudo_tier_superior:
+	npc_msg msg_0390_R36_00022
+_sudo_yesno:
+	npc_msg msg_0390_R36_00024
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 0
+	goto_if_eq _sudo_accept
+	npc_msg msg_0390_R36_00025
+	goto _sudo_preview_loop
+_sudo_accept:
 	setflag FLAG_UNK_0B4
 	npc_msg msg_0390_R36_00002
 	closemsg
@@ -97,7 +127,7 @@ _012C:
 	apply_movement obj_R36_usokky, _0394
 	wait_movement
 	setflag FLAG_ENGAGING_STATIC_POKEMON
-	wild_battle SPECIES_SUDOWOODO, 20, 0
+	sudowoodo_wild_battle
 	clearflag FLAG_ENGAGING_STATIC_POKEMON
 	check_battle_won VAR_SPECIAL_RESULT
 	compare VAR_SPECIAL_RESULT, 0

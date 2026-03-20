@@ -4809,6 +4809,16 @@
 	.short 860
 	.endm
 
+	.macro sudowoodo_generate nature_out, iv_tier_out
+	.short 861
+	.short \nature_out
+	.short \iv_tier_out
+	.endm
+
+	.macro sudowoodo_wild_battle
+	.short 862
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script

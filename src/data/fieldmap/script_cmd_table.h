@@ -860,6 +860,8 @@ BOOL ScrCmd_TogepiEggGenerate(ScriptContext *ctx);
 BOOL ScrCmd_SaveTogepiPersonalityData(ScriptContext *ctx);
 BOOL ScrCmd_EeveeGenerate(ScriptContext *ctx);
 BOOL ScrCmd_EeveeCommit(ScriptContext *ctx);
+BOOL ScrCmd_SudowoodoGenerate(ScriptContext *ctx);
+BOOL ScrCmd_SudowoodoWildBattle(ScriptContext *ctx);
 
 const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_Nop,
@@ -1723,6 +1725,8 @@ const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_SaveTogepiPersonalityData,
     ScrCmd_EeveeGenerate,
     ScrCmd_EeveeCommit,
+    ScrCmd_SudowoodoGenerate,
+    ScrCmd_SudowoodoWildBattle,
 };
 const u32 sNumScriptCmds = NELEMS(gScriptCmdTable);
 
