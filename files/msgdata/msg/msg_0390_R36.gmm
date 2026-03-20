@@ -76,4 +76,32 @@
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">You have to plant Berries in the soil.\nYou should water them from time\fto time. Then they’ll grow strong!\rI have to go back to Goldenrod.\fAre you heading for Ecruteak?\rThen you should go north here.\nSee you around!\r</language>
 	</row>
+	<row id="msg_0390_R36_00019" index="19">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">The odd tree seems to give off\na {STRVAR_1 0, 2, 0} aura...\r</language>
+	</row>
+	<row id="msg_0390_R36_00020" index="20">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It must be a decent tree!\r</language>
+	</row>
+	<row id="msg_0390_R36_00021" index="21">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It must be an above-average tree!\r</language>
+	</row>
+	<row id="msg_0390_R36_00022" index="22">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It must be a relatively superior tree!\r</language>
+	</row>
+	<row id="msg_0390_R36_00023" index="23">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It must be an outstanding tree!\r</language>
+	</row>
+	<row id="msg_0390_R36_00024" index="24">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Use the SquirtBottle again? {YESNO 0}</language>
+	</row>
+	<row id="msg_0390_R36_00025" index="25">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">The odd tree settles back down...\r</language>
+	</row>
 </body>

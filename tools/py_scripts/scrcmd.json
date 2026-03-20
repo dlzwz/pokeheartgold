@@ -5374,6 +5374,14 @@
     {
       "name": "eevee_commit",
       "args": []
+    },
+    {
+      "name": "sudowoodo_generate",
+      "args": ["var", "var"]
+    },
+    {
+      "name": "sudowoodo_wild_battle",
+      "args": []
     }
   ],
   "argtypes": {
