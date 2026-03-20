@@ -285,9 +285,48 @@ scr_seq_T29_001:
 	npc_msg msg_0626_T29_00000
 	wait_cry
 	closemsg
+_gyarados_preview_loop:
+	gyarados_generate VAR_SPECIAL_x8000, VAR_SPECIAL_x8001
+	buffer_nature_name 2, VAR_SPECIAL_x8000
+	compare VAR_SPECIAL_x8001, 0
+	goto_if_eq _gyarados_tier_0
+	compare VAR_SPECIAL_x8001, 1
+	goto_if_eq _gyarados_tier_1
+	compare VAR_SPECIAL_x8001, 2
+	goto_if_eq _gyarados_tier_2
+_gyarados_tier_3:
+	npc_msg msg_0626_T29_00039
+	goto _gyarados_yesno
+_gyarados_tier_2:
+	npc_msg msg_0626_T29_00038
+	goto _gyarados_yesno
+_gyarados_tier_1:
+	npc_msg msg_0626_T29_00037
+	goto _gyarados_yesno
+_gyarados_tier_0:
+	npc_msg msg_0626_T29_00036
+_gyarados_yesno:
+	wait_button_or_walk_away
+	closemsg
+	npc_msg msg_0626_T29_00040
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 1
+	goto_if_eq _gyarados_reject
+_gyarados_accept:
+	closemsg
 	setflag FLAG_ENGAGING_STATIC_POKEMON
-	wild_battle SPECIES_GYARADOS, 30, 1
+	gyarados_wild_battle
 	clearflag FLAG_ENGAGING_STATIC_POKEMON
+	goto _gyarados_post_battle
+_gyarados_reject:
+	closemsg
+	npc_msg msg_0626_T29_00041
+	wait_button_or_walk_away
+	closemsg
+	goto _gyarados_preview_loop
+_gyarados_post_battle:
 	check_battle_won VAR_SPECIAL_RESULT
 	compare VAR_SPECIAL_RESULT, 0
 	goto_if_eq _0456

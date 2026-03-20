@@ -5390,6 +5390,14 @@
     {
       "name": "spiky_ear_pichu_commit",
       "args": []
+    },
+    {
+      "name": "gyarados_generate",
+      "args": ["var", "var"]
+    },
+    {
+      "name": "gyarados_wild_battle",
+      "args": []
     }
   ],
   "argtypes": {

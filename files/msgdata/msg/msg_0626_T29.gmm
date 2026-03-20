@@ -152,4 +152,28 @@
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">Obtained the {STRVAR_1 8, 0, 0}!\rToo bad!\nThe Bag is full...</language>
 	</row>
+	<row id="msg_0626_T29_00036" index="36">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">The GYARADOS is thrashing with\na {STRVAR_1 0, 2, 0} rage...\rIts power feels decent.\r</language>
+	</row>
+	<row id="msg_0626_T29_00037" index="37">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">The GYARADOS is thrashing with\na {STRVAR_1 0, 2, 0} rage...\rIts power feels above average!\r</language>
+	</row>
+	<row id="msg_0626_T29_00038" index="38">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">The GYARADOS is thrashing with\na {STRVAR_1 0, 2, 0} rage...\rIts power feels relatively superior!\r</language>
+	</row>
+	<row id="msg_0626_T29_00039" index="39">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">The GYARADOS is thrashing with\na {STRVAR_1 0, 2, 0} rage...\rIts power feels outstanding!!\r</language>
+	</row>
+	<row id="msg_0626_T29_00040" index="40">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Confront it? {YESNO 0}</language>
+	</row>
+	<row id="msg_0626_T29_00041" index="41">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">It continues thrashing\nviolently in the water...\r</language>
+	</row>
 </body>

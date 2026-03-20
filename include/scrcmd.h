@@ -174,6 +174,8 @@ BOOL ScrCmd_SudowoodoGenerate(ScriptContext *ctx);
 BOOL ScrCmd_SudowoodoWildBattle(ScriptContext *ctx);
 BOOL ScrCmd_SpikyEarPichuGenerate(ScriptContext *ctx);
 BOOL ScrCmd_SpikyEarPichuCommit(ScriptContext *ctx);
+BOOL ScrCmd_GyaradosGenerate(ScriptContext *ctx);
+BOOL ScrCmd_GyaradosWildBattle(ScriptContext *ctx);
 BOOL ScrCmd_SetMonMove(ScriptContext *ctx);
 BOOL ScrCmd_MonHasMove(ScriptContext *ctx);
 BOOL ScrCmd_GetPartySlotWithMove(ScriptContext *ctx);
