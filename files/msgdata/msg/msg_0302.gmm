@@ -819,4 +819,104 @@
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">EFFORT VALUES</language>
 	</row>
+	<row id="msg_0302_00197" index="197">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Hardy</language>
+	</row>
+	<row id="msg_0302_00198" index="198">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Lonely</language>
+	</row>
+	<row id="msg_0302_00199" index="199">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Brave</language>
+	</row>
+	<row id="msg_0302_00200" index="200">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Adamant</language>
+	</row>
+	<row id="msg_0302_00201" index="201">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Naughty</language>
+	</row>
+	<row id="msg_0302_00202" index="202">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Bold</language>
+	</row>
+	<row id="msg_0302_00203" index="203">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Docile</language>
+	</row>
+	<row id="msg_0302_00204" index="204">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Relaxed</language>
+	</row>
+	<row id="msg_0302_00205" index="205">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Impish</language>
+	</row>
+	<row id="msg_0302_00206" index="206">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Lax</language>
+	</row>
+	<row id="msg_0302_00207" index="207">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Timid</language>
+	</row>
+	<row id="msg_0302_00208" index="208">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Hasty</language>
+	</row>
+	<row id="msg_0302_00209" index="209">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Serious</language>
+	</row>
+	<row id="msg_0302_00210" index="210">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Jolly</language>
+	</row>
+	<row id="msg_0302_00211" index="211">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Naive</language>
+	</row>
+	<row id="msg_0302_00212" index="212">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Modest</language>
+	</row>
+	<row id="msg_0302_00213" index="213">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Mild</language>
+	</row>
+	<row id="msg_0302_00214" index="214">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Quiet</language>
+	</row>
+	<row id="msg_0302_00215" index="215">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Bashful</language>
+	</row>
+	<row id="msg_0302_00216" index="216">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Rash</language>
+	</row>
+	<row id="msg_0302_00217" index="217">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Calm</language>
+	</row>
+	<row id="msg_0302_00218" index="218">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Gentle</language>
+	</row>
+	<row id="msg_0302_00219" index="219">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Sassy</language>
+	</row>
+	<row id="msg_0302_00220" index="220">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Careful</language>
+	</row>
+	<row id="msg_0302_00221" index="221">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Quirky</language>
+	</row>
 </body>

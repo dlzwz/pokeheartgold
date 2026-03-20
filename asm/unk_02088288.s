@@ -2733,10 +2733,6 @@ sub_0208981C: ; 0x0208981C
 	bl GetMonData
 	cmp r0, #1
 	bne _0208992C
-	ldr r0, [r4, #0x50]
-	lsl r0, r0, #3
-	lsr r0, r0, #0x1f
-	bne _0208992C
 	ldrb r1, [r4, #0x12]
 	mov r0, #0x80
 	bic r1, r0
@@ -3363,9 +3359,6 @@ sub_02089E30: ; 0x02089E30
 	lsl r0, r0, #6
 	ldr r4, [r3, r0]
 	mov ip, r1
-	lsl r4, r4, #3
-	lsr r4, r4, #0x1f
-	bne _02089E7A
 	sub r0, #0x54
 	ldr r0, [r3, r0]
 	mov r7, #0

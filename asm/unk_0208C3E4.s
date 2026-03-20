@@ -255,6 +255,14 @@ sub_0208C57C: ; 0x0208C57C
 	add r2, #0x20
 	str r0, [sp, #8]
 	str r1, [sp, #0xc]
+	mov r0, #0xa
+	lsl r0, r0, #6
+	ldr r0, [r5, r0]
+	lsl r0, r0, #3
+	lsr r0, r0, #0x1f
+	beq _0208C57C_not_egg
+	sub r2, #4
+_0208C57C_not_egg:
 	ldr r2, [r5, r2]
 	add r0, r5, r4
 	add r3, r1, #0
@@ -324,7 +332,7 @@ sub_0208C614: ; 0x0208C614
 	ldr r0, [r5, r0]
 	lsl r0, r0, #3
 	lsr r0, r0, #0x1f
-	bne _0208C69C
+	bne _0208C614_egg
 	mov r0, #5
 	str r0, [sp]
 	ldr r0, _0208C6A8 ; =0x0000079C
@@ -372,6 +380,19 @@ sub_0208C614: ; 0x0208C614
 	add r0, r5, r6
 	mov r3, #0x10
 	bl AddTextPrinterParameterizedWithColor
+	b _0208C69C
+_0208C614_egg:
+	mov r0, #0x26
+	lsl r0, r0, #4
+	add r0, r5, r0
+	ldrb r2, [r0, #3]
+	add r2, #0xc5
+	mov r0, #0
+	str r0, [sp]
+	add r0, r5, #0
+	mov r1, #0x20
+	ldr r3, _0208C614_color
+	bl sub_0208C850
 _0208C69C:
 	add r0, r5, r6
 	bl ScheduleWindowCopyToVram
@@ -381,6 +402,7 @@ _0208C69C:
 _0208C6A8: .word 0x0000079C
 _0208C6AC: .word 0x000007A8
 _0208C6B0: .word 0x000007AC
+_0208C614_color: .word 0x000E0F00
 	thumb_func_end sub_0208C614
 
 	thumb_func_start sub_0208C6B4
