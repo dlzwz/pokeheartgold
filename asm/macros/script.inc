@@ -4819,6 +4819,15 @@
 	.short 862
 	.endm
 
+	.macro spiky_ear_pichu_generate iv_tier_out
+	.short 863
+	.short \iv_tier_out
+	.endm
+
+	.macro spiky_ear_pichu_commit
+	.short 864
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script
