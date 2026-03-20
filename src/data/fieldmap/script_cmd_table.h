@@ -858,6 +858,8 @@ BOOL ScrCmd_PrimoEggGenerate(ScriptContext *ctx);
 BOOL ScrCmd_GiftEggCommit(ScriptContext *ctx);
 BOOL ScrCmd_TogepiEggGenerate(ScriptContext *ctx);
 BOOL ScrCmd_SaveTogepiPersonalityData(ScriptContext *ctx);
+BOOL ScrCmd_EeveeGenerate(ScriptContext *ctx);
+BOOL ScrCmd_EeveeCommit(ScriptContext *ctx);
 
 const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_Nop,
@@ -1719,6 +1721,8 @@ const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_GiftEggCommit,
     ScrCmd_TogepiEggGenerate,
     ScrCmd_SaveTogepiPersonalityData,
+    ScrCmd_EeveeGenerate,
+    ScrCmd_EeveeCommit,
 };
 const u32 sNumScriptCmds = NELEMS(gScriptCmdTable);
 

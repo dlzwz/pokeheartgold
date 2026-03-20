@@ -5366,6 +5366,14 @@
     {
       "name": "save_togepi_personality",
       "args": []
+    },
+    {
+      "name": "eevee_generate",
+      "args": ["var", "var"]
+    },
+    {
+      "name": "eevee_commit",
+      "args": []
     }
   ],
   "argtypes": {

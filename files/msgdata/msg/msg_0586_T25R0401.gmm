@@ -65,4 +65,32 @@
 		<attribute name="window_context_name">used</attribute>
 		<language name="English">When you call my brother, he can tell\nyou about the PC Boxes where you\fstore your Pokémon!</language>
 	</row>
+	<row id="msg_0586_T25R0401_00016" index="16">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Bill: Checking its data now...\rLooks like a {STRVAR_1 0, 2, 0} one.\r</language>
+	</row>
+	<row id="msg_0586_T25R0401_00017" index="17">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Decent potential. Not bad!\r</language>
+	</row>
+	<row id="msg_0586_T25R0401_00018" index="18">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Above-average potential! Pretty solid!\r</language>
+	</row>
+	<row id="msg_0586_T25R0401_00019" index="19">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Relatively superior potential! Nice!\r</language>
+	</row>
+	<row id="msg_0586_T25R0401_00020" index="20">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Outstanding potential!!\nThis one’s something else!\r</language>
+	</row>
+	<row id="msg_0586_T25R0401_00021" index="21">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">So, {STRVAR_1 3, 0, 0}...\nWhat do you say? {YESNO 0}</language>
+	</row>
+	<row id="msg_0586_T25R0401_00022" index="22">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Hm... Maybe one more scan, then.\r</language>
+	</row>
 </body>

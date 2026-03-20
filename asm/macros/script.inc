@@ -4799,6 +4799,16 @@
 	.short 858
 	.endm
 
+	.macro eevee_generate nature_out, iv_tier_out
+	.short 859
+	.short \nature_out
+	.short \iv_tier_out
+	.endm
+
+	.macro eevee_commit
+	.short 860
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script
