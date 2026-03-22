@@ -4828,6 +4828,16 @@
 	.short 864
 	.endm
 
+	.macro gyarados_generate nature_out, iv_tier_out
+	.short 865
+	.short \nature_out
+	.short \iv_tier_out
+	.endm
+
+	.macro gyarados_wild_battle
+	.short 866
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script

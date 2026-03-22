@@ -864,6 +864,8 @@ BOOL ScrCmd_SudowoodoGenerate(ScriptContext *ctx);
 BOOL ScrCmd_SudowoodoWildBattle(ScriptContext *ctx);
 BOOL ScrCmd_SpikyEarPichuGenerate(ScriptContext *ctx);
 BOOL ScrCmd_SpikyEarPichuCommit(ScriptContext *ctx);
+BOOL ScrCmd_GyaradosGenerate(ScriptContext *ctx);
+BOOL ScrCmd_GyaradosWildBattle(ScriptContext *ctx);
 
 const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_Nop,
@@ -1731,6 +1733,8 @@ const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_SudowoodoWildBattle,
     ScrCmd_SpikyEarPichuGenerate,
     ScrCmd_SpikyEarPichuCommit,
+    ScrCmd_GyaradosGenerate,
+    ScrCmd_GyaradosWildBattle,
 };
 const u32 sNumScriptCmds = NELEMS(gScriptCmdTable);
 
