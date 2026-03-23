@@ -12,41 +12,37 @@ scr_seq_0150_000:
 	play_se SEQ_SE_DP_SELECT
 	lockall
 	faceplayer
-	npc_msg msg_0023_00000
-	closemsg
 	hasitem ITEM_APRICORN_BOX, 1, VAR_SPECIAL_RESULT
 	compare VAR_SPECIAL_RESULT, 0
-	goto_if_eq _0099
+	goto_if_eq _no_box
 	anim_apricorn_tree VAR_SPECIAL_RESULT
 	compare VAR_SPECIAL_RESULT, 0
-	goto_if_eq _0088
+	goto_if_eq _no_apricorn
 	apricorn_tree_get_apricorn VAR_SPECIAL_x8000
 	setvar VAR_SPECIAL_x8005, 1
 	buffer_players_name 0
 	buffer_apricorn_name 1, VAR_SPECIAL_x8000
-	npc_msg msg_0023_00001
-	closemsg
 	play_fanfare SEQ_ME_ITEM
 	npc_msg msg_0023_00003
 	wait_fanfare
 	give_apricorn_from_tree VAR_SPECIAL_x8000, 1, VAR_SPECIAL_RESULT
 	add_special_game_stat SCORE_EVENT_1
 	compare VAR_SPECIAL_RESULT, 0
-	goto_if_eq _007D
+	goto_if_eq _box_full
 	npc_msg msg_0023_00004
 	wait_button_or_walk_away
 	closemsg
 	releaseall
 	end
 
-_007D:
+_box_full:
 	npc_msg msg_0023_00006
 	wait_button_or_walk_away
 	closemsg
 	releaseall
 	end
 
-_0088:
+_no_apricorn:
 	wait 15, VAR_SPECIAL_RESULT
 	npc_msg msg_0023_00002
 	wait_button_or_walk_away
@@ -54,7 +50,9 @@ _0088:
 	releaseall
 	end
 
-_0099:
+_no_box:
+	npc_msg msg_0023_00000
+	closemsg
 	npc_msg msg_0023_00007
 	wait_button_or_walk_away
 	closemsg
