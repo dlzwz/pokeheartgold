@@ -6132,7 +6132,7 @@ _0225B728:
 	bne _0225B7B4
 	ldr r0, [r4, #0x28]
 	cmp r0, #0
-	beq _0225B774
+	b _0225B774
 	ldrb r1, [r4, #0x11]
 	mov r0, #0xb
 	add r2, sp, #0x18
@@ -6337,7 +6337,7 @@ _0225B8D0:
 	bne _0225B95C
 	ldr r0, [r4, #0x28]
 	cmp r0, #0
-	beq _0225B91C
+	b _0225B91C
 	ldrb r1, [r4, #0x11]
 	mov r0, #0xb
 	add r2, sp, #0x18
@@ -6904,7 +6904,7 @@ _0225BD50:
 	add r0, #0x92
 	ldrb r0, [r0]
 	cmp r0, #0
-	beq _0225BDCC
+	b _0225BDCC
 	mov r0, #5
 	bl ov07_0221BEDC
 	str r0, [r4, #0x24]
@@ -7314,7 +7314,7 @@ _0225C0B0:
 	add r0, #0x92
 	ldrb r0, [r0]
 	cmp r0, #0
-	beq _0225C126
+	b _0225C126
 	mov r0, #5
 	bl ov07_0221BEDC
 	str r0, [r4, #0x24]
@@ -7883,7 +7883,7 @@ _0225C588:
 	add r0, #0x92
 	ldrb r0, [r0]
 	cmp r0, #0
-	beq _0225C5D0
+	b _0225C5D0
 	add r0, r4, #0
 	add r0, #0x81
 	ldrb r1, [r0]
@@ -8245,7 +8245,7 @@ _0225C87A:
 	add r0, #0x92
 	ldrb r0, [r0]
 	cmp r0, #0
-	beq _0225C8B6
+	b _0225C8B6
 	add r0, r4, #0
 	add r0, #0x81
 	ldrb r1, [r0]
