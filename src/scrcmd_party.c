@@ -494,6 +494,69 @@ BOOL ScrCmd_DratiniCommit(ScriptContext *ctx) {
     return FALSE;
 }
 
+// tyrogue_generate <VAR_nature_out> <VAR_iv_tier_out>
+//
+// Generates a candidate Karate King Tyrogue gift using the same path as
+// ScrCmd_GiveMon (CreateMon + sub_020720FC), without adding it to the party
+// or updating the Pokédex.  Stores the resulting nature index in VAR_nature_out
+// and an IV-total appraisal tier (0–3) in VAR_iv_tier_out.
+// Any previously buffered temp Pokémon is discarded first.
+BOOL ScrCmd_TyrogueGenerate(ScriptContext *ctx) {
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+
+    u16 *natureOut = ScriptGetVarPointer(ctx);
+    u16 *ivTierOut = ScriptGetVarPointer(ctx);
+
+    if (sGiftTempEgg != NULL) {
+        Heap_Free(sGiftTempEgg);
+        sGiftTempEgg = NULL;
+    }
+
+    PlayerProfile *profile = Save_PlayerData_GetProfile(fieldSystem->saveData);
+    u32 map = MapHeader_GetMapSec(fieldSystem->location->mapId);
+
+    sGiftTempEgg = AllocMonZeroed(HEAP_ID_FIELD2);
+    ZeroMonData(sGiftTempEgg);
+    CreateMon(sGiftTempEgg, SPECIES_TYROGUE, 10, 32, FALSE, 0, 0, 0);
+    sub_020720FC(sGiftTempEgg, profile, ITEM_POKE_BALL, map, 24, HEAP_ID_FIELD2);
+
+    *natureOut = GetMonNature(sGiftTempEgg);
+
+    u32 ivTotal = GetMonData(sGiftTempEgg, MON_DATA_HP_IV,    NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_ATK_IV,   NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_DEF_IV,   NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_SPEED_IV, NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_SPATK_IV, NULL)
+                + GetMonData(sGiftTempEgg, MON_DATA_SPDEF_IV, NULL);
+
+    if (ivTotal <= 90)       *ivTierOut = 0;
+    else if (ivTotal <= 120) *ivTierOut = 1;
+    else if (ivTotal <= 150) *ivTierOut = 2;
+    else                     *ivTierOut = 3;
+
+    return FALSE;
+}
+
+// tyrogue_commit
+//
+// Adds the candidate Tyrogue buffered by ScrCmd_TyrogueGenerate to the party,
+// updates the Pokédex (matching GiveMon behaviour), then frees the buffer.
+BOOL ScrCmd_TyrogueCommit(ScriptContext *ctx) {
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+
+    if (sGiftTempEgg == NULL) {
+        return FALSE;
+    }
+
+    Party *party = SaveArray_Party_Get(fieldSystem->saveData);
+    Party_AddMon(party, sGiftTempEgg);
+    UpdatePokedexWithReceivedSpecies(fieldSystem->saveData, sGiftTempEgg);
+    Heap_Free(sGiftTempEgg);
+    sGiftTempEgg = NULL;
+
+    return FALSE;
+}
+
 BOOL ScrCmd_SetMonMove(ScriptContext *ctx) {
     u16 monSlot = ScriptGetVar(ctx);
     u16 moveSlot = ScriptGetVar(ctx);

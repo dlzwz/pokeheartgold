@@ -4848,6 +4848,16 @@
 	.short 868
 	.endm
 
+	.macro tyrogue_generate nature_out, iv_tier_out
+	.short 869
+	.short \nature_out
+	.short \iv_tier_out
+	.endm
+
+	.macro tyrogue_commit
+	.short 870
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script

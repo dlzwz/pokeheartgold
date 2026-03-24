@@ -30,11 +30,38 @@ _0046:
 	goto _00D2
 
 _0063:
+_tyrogue_preview_loop:
+	tyrogue_generate VAR_SPECIAL_x8000, VAR_SPECIAL_x8001
+	buffer_nature_name 2, VAR_SPECIAL_x8000
+	compare VAR_SPECIAL_x8001, 0
+	goto_if_eq _tyrogue_tier_0
+	compare VAR_SPECIAL_x8001, 1
+	goto_if_eq _tyrogue_tier_1
+	compare VAR_SPECIAL_x8001, 2
+	goto_if_eq _tyrogue_tier_2
+_tyrogue_tier_3:
+	npc_msg msg_0121_D38R0104_00010
+	goto _tyrogue_yesno
+_tyrogue_tier_2:
+	npc_msg msg_0121_D38R0104_00009
+	goto _tyrogue_yesno
+_tyrogue_tier_1:
+	npc_msg msg_0121_D38R0104_00008
+	goto _tyrogue_yesno
+_tyrogue_tier_0:
+	npc_msg msg_0121_D38R0104_00007
+_tyrogue_yesno:
+	npc_msg msg_0121_D38R0104_00011
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 1
+	goto_if_eq _tyrogue_reject
 	buffer_players_name 0
 	npc_msg msg_0121_D38R0104_00002
 	play_fanfare SEQ_ME_POKEGET
 	wait_fanfare
-	give_mon SPECIES_TYROGUE, 10, 0, 0, 0, VAR_SPECIAL_RESULT
+	tyrogue_commit
 	npc_msg msg_0121_D38R0104_00005
 	touchscreen_menu_hide
 	getmenuchoice VAR_SPECIAL_RESULT
@@ -42,6 +69,10 @@ _0063:
 	compare VAR_SPECIAL_RESULT, 0
 	call_if_eq _00A6
 	touchscreen_menu_show
+	goto _0097
+_tyrogue_reject:
+	npc_msg msg_0121_D38R0104_00012
+	goto _tyrogue_preview_loop
 _0097:
 	setflag FLAG_GOT_TYROGUE_FROM_KARATE_KING
 	npc_msg msg_0121_D38R0104_00003

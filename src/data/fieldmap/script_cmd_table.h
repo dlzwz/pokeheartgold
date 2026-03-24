@@ -868,6 +868,8 @@ BOOL ScrCmd_GyaradosGenerate(ScriptContext *ctx);
 BOOL ScrCmd_GyaradosWildBattle(ScriptContext *ctx);
 BOOL ScrCmd_DratiniGenerate(ScriptContext *ctx);
 BOOL ScrCmd_DratiniCommit(ScriptContext *ctx);
+BOOL ScrCmd_TyrogueGenerate(ScriptContext *ctx);
+BOOL ScrCmd_TyrogueCommit(ScriptContext *ctx);
 
 const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_Nop,
@@ -1739,6 +1741,8 @@ const ScrCmdFunc gScriptCmdTable[] = {
     ScrCmd_GyaradosWildBattle,
     ScrCmd_DratiniGenerate,
     ScrCmd_DratiniCommit,
+    ScrCmd_TyrogueGenerate,
+    ScrCmd_TyrogueCommit,
 };
 const u32 sNumScriptCmds = NELEMS(gScriptCmdTable);
 

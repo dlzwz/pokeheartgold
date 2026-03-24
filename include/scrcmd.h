@@ -178,6 +178,8 @@ BOOL ScrCmd_GyaradosGenerate(ScriptContext *ctx);
 BOOL ScrCmd_GyaradosWildBattle(ScriptContext *ctx);
 BOOL ScrCmd_DratiniGenerate(ScriptContext *ctx);
 BOOL ScrCmd_DratiniCommit(ScriptContext *ctx);
+BOOL ScrCmd_TyrogueGenerate(ScriptContext *ctx);
+BOOL ScrCmd_TyrogueCommit(ScriptContext *ctx);
 BOOL ScrCmd_SetMonMove(ScriptContext *ctx);
 BOOL ScrCmd_MonHasMove(ScriptContext *ctx);
 BOOL ScrCmd_GetPartySlotWithMove(ScriptContext *ctx);

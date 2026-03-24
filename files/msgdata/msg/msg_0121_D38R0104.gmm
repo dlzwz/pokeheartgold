@@ -29,4 +29,28 @@
 		<language name="English"></language>
 		<language name="日本語">XXXXXXXXXXXXXXXXXXXXXXXXX</language>
 	</row>
+	<row id="msg_0121_D38R0104_00007" index="7">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">A {STRVAR_1 0, 2, 0} nature.\nIt fights with decent spirit!\r</language>
+	</row>
+	<row id="msg_0121_D38R0104_00008" index="8">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">A {STRVAR_1 0, 2, 0} nature.\nIt fights with above-average spirit!\r</language>
+	</row>
+	<row id="msg_0121_D38R0104_00009" index="9">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">A {STRVAR_1 0, 2, 0} nature.\nIt fights with relatively superior spirit!\r</language>
+	</row>
+	<row id="msg_0121_D38R0104_00010" index="10">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">A {STRVAR_1 0, 2, 0} nature.\nIt fights with outstanding spirit!!\r</language>
+	</row>
+	<row id="msg_0121_D38R0104_00011" index="11">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">Will you take it? {YESNO 0}</language>
+	</row>
+	<row id="msg_0121_D38R0104_00012" index="12">
+		<attribute name="window_context_name">used</attribute>
+		<language name="English">No? It’s eager to fight.\nLook again.\r</language>
+	</row>
 </body>

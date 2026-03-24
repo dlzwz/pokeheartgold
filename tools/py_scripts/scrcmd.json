@@ -5406,6 +5406,14 @@
     {
       "name": "dratini_commit",
       "args": []
+    },
+    {
+      "name": "tyrogue_generate",
+      "args": ["var", "var"]
+    },
+    {
+      "name": "tyrogue_commit",
+      "args": []
     }
   ],
   "argtypes": {
