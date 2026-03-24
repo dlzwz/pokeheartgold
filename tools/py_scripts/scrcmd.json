@@ -5398,6 +5398,14 @@
     {
       "name": "gyarados_wild_battle",
       "args": []
+    },
+    {
+      "name": "dratini_generate",
+      "args": ["var", "var"]
+    },
+    {
+      "name": "dratini_commit",
+      "args": []
     }
   ],
   "argtypes": {

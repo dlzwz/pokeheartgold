@@ -4838,6 +4838,16 @@
 	.short 866
 	.endm
 
+	.macro dratini_generate nature_out, iv_tier_out
+	.short 867
+	.short \nature_out
+	.short \iv_tier_out
+	.endm
+
+	.macro dratini_commit
+	.short 868
+	.endm
+
 	; Script headers
 
 	.macro map_script kind, script

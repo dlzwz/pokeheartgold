@@ -344,11 +344,39 @@ _04A6:
 	goto _0548
 
 _04C3:
+_dratini_preview_loop:
+	dratini_generate VAR_SPECIAL_x8000, VAR_SPECIAL_x8001
+	buffer_nature_name 2, VAR_SPECIAL_x8000
+	compare VAR_SPECIAL_x8001, 0
+	goto_if_eq _dratini_tier_0
+	compare VAR_SPECIAL_x8001, 1
+	goto_if_eq _dratini_tier_1
+	compare VAR_SPECIAL_x8001, 2
+	goto_if_eq _dratini_tier_2
+_dratini_tier_3:
+	npc_msg msg_0130_D44R0103_00036
+	goto _dratini_yesno
+_dratini_tier_2:
+	npc_msg msg_0130_D44R0103_00035
+	goto _dratini_yesno
+_dratini_tier_1:
+	npc_msg msg_0130_D44R0103_00034
+	goto _dratini_yesno
+_dratini_tier_0:
+	npc_msg msg_0130_D44R0103_00033
+_dratini_yesno:
+	npc_msg msg_0130_D44R0103_00037
+	touchscreen_menu_hide
+	getmenuchoice VAR_SPECIAL_RESULT
+	touchscreen_menu_show
+	compare VAR_SPECIAL_RESULT, 1
+	goto_if_eq _dratini_reject
+_dratini_accept:
 	buffer_players_name 0
 	npc_msg msg_0130_D44R0103_00027
 	play_fanfare SEQ_ME_SHINKAOME
 	wait_fanfare
-	give_mon SPECIES_DRATINI, 15, 0, 0, 0, VAR_SPECIAL_RESULT
+	dratini_commit
 	goto_if_set FLAG_FAILED_DRAGONS_DEN_QUIZ, _04F0
 	set_mon_move VAR_SPECIAL_x8005, 0, MOVE_EXTREME_SPEED
 _04F0:
@@ -359,6 +387,10 @@ _04F0:
 	compare VAR_SPECIAL_RESULT, 1
 	goto_if_ne _050E
 	goto _052E
+
+_dratini_reject:
+	npc_msg msg_0130_D44R0103_00038
+	goto _dratini_preview_loop
 
 _050E:
 	closemsg
